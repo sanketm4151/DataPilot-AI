@@ -1,0 +1,521 @@
+Order ID,Order Date,Customer Name,Customer Email,Region,Category,Product,Quantity,Unit Price ,Discount,Sales,Payment Method,Customer Age,Rating
+ORD-1256,2023-03-19,Priya Kapoor,customer256@example.com,East,Clothing,T-Shirt,8,62.66,,501.28,UPI,34.0,4.0
+ORD-1199,2024-08-29,Pooja Desai,customer199@example.com,South,Furniture,Chair,2,180.72,15%,307.22,Cash ,43.0,
+ORD-1478,2023-05-25,Rohan Nair,customer478@example.com,South,Office Supplies,Notebook,3,25.23,10%,68.12,PayPal,50.0,4.0
+ORD-1437,2024-11-20,Aarav Desai,customer437@example.com,South,Office Supplies,Stapler,7,25.88,0%,181.16,Cash,49.0,3.0
+ORD-1463,2023-02-07,Kavya Reddy,customer463@example.com,south,Furniture,Desk,1,186.24,10%,167.62,PayPal,42.0,3.0
+ORD-1154,2024-02-10,Karan Verma,customer154@example.com,East,Electronics,Headphones,8,382.68,0%,3061.44,Cash,31.0,3.0
+ORD-1155,2024-02-19,Vikram Iyer,customer155@example.com,North,Office Supplies,Stapler,6,21.83,20%,104.78,Cash,,4.0
+ORD-1055,2023-05-26,Anjali Sharma,customer55@example.com,South,Office Supplies,Printer Paper,1,15.72,10%,14.15,Credit Card,,4.0
+ORD-1365,2024-01-29,Priya Gupta,customer365@example.com,North,Furniture,Desk,1,148.36,20%,118.69,UPI,36.0,4.0
+ORD-1394,2023-03-18,Rahul Nair,customer394@example.com,West,Electronics,Laptop,3,285.0,0%,855.0,paypal,48.0,
+ORD-1188,2023-07-28,Kavya Iyer,customer188@example.com,west,Office Supplies,Stapler,6,24.75,10%,133.65,Cash,59.0,3.0
+ORD-1084,2023-06-25,Rahul Iyer,customer84@example.com,North,Electronics,Laptop,4,340.64,5%,1294.43,Credit Card,,4.0
+ORD-1483,2024-11-24,Amit Reddy,customer483@example.com,north,Furniture,Desk,8,221.54,0%,1772.32,UPI,54.0,5.0
+ORD-1320,2023-03-13,Amit Joshi,customer320@example.com,North,Clothing,T-Shirt,5,61.25,5%,290.94,PayPal,35.0,
+ORD-1131,2023-06-02,Kavya Reddy,customer131@example.com,West,Clothing,Sneakers,7,53.05,10%,334.22,PayPal,62.0,4.0
+ORD-1146,2024-06-21,Vikram Reddy,customer146@example.com,North,Furniture,Chair,6,173.37,5%,988.21,DEBIT CARD,28.0,5.0
+ORD-1141,2023-10-03,Rohan Verma,customer141@example.com,south,Office Supplies,Pen Set,5,25.46,0%,127.3,,28.0,5.0
+ORD-1089,2023-08-25,Anjali Mehta,customer89@example.com,West ,Office Supplies,Notebook,4,20.17,15%,68.58,Cash,23.0,4.0
+ORD-1457,2024-03-20,Priya Reddy,customer457@example.com,South,Office Supplies,Pen Set,5,19.83,10%,89.24,UPI,62.0,5.0
+ORD-1067,2023-08-07,Kavya Patel,customer67@example.com,East,Furniture,Chair,6,204.34,10%,1103.44,Debit Card,44.0,5.0
+ORD-1403,2023-03-07,Priya Joshi,customer403@example.com,North,Electronics,Headphones,6,237.63,20%,1140.62,PayPal,55.0,4.0
+ORD-1413,2024-03-09,Neha Sharma,customer413@example.com,North,Clothing,Sneakers,3,40.04,5%,114.11,PayPal ,65.0,5.0
+ORD-1120,2024-11-26,Neha Joshi,customer120@example.com,West,Office Supplies,Notebook,8,22.92,5%,174.19,PayPal,31.0,5.0
+ORD-1330,2023-03-19,Vikram Joshi,customer330@example.com,West,Office Supplies,Pen Set,9,16.93,10%,137.13,Debit Card,25.0,5.0
+ORD-1377,2024-03-03,Vikram Patel,customer377@example.com,South ,Furniture,Bookshelf,9,222.34,0%,2001.06,UPI,,5.0
+ORD-1396,2024-09-08,Neha Sharma,customer396@example.com,NORTH,Clothing,Jacket,6,57.46,5%,327.52,PayPal,55.0,
+ORD-1053,2024-07-11,Rahul Nair,customer53@example.com,south,Office Supplies,Printer Paper,2,21.13,15%,35.92,UPI,23.0,4.0
+ORD-1173,2024-09-01,Neha Gupta,customer173@example.com,North,Clothing,T-Shirt,2,51.27,10%,92.29,PayPal,40.0,4.0
+ORD-1001,2024-12-21,Amit Patel,customer1@example.com,East,Furniture,Bookshelf,1,178.7,0%,178.7,Cash,27.0,2.0
+ORD-1130,2023-08-30,Pooja Verma,customer130@example.com,North,Electronics,Headphones,9,283.65,10%,2297.56,Credit Card,62.0,4.0
+ORD-1451,2024-07-17,Amit Patel,customer451@example.com,North,Clothing,T-Shirt,5,51.53,10%,231.88,Debit Card,64.0,4.0
+ORD-1077,2024-06-16,Rohan Joshi,customer77@example.com,South,Office Supplies,Notebook,5,16.78,0%,83.9,PAYPAL,67.0,5.0
+ORD-1227,2023-09-24,Sneha Kapoor,customer227@example.com,South,Office Supplies,Printer Paper,1,18.81,,15.99,,36.0,5.0
+ORD-1018,2024-03-12,Sneha Nair,customer18@example.com,South,Clothing,T-Shirt,2,38.32,5%,72.81,UPI,19.0,
+ORD-1282,2024-05-19,Rohan Desai,customer282@example.com,South,Electronics,Headphones,7,301.61,0%,2111.27,PayPal,22.0,5.0
+ORD-1340,2024-10-13,Sneha Joshi,customer340@example.com,North,Electronics,Monitor,4,253.24,10%,911.66,Credit Card,,4.0
+ORD-1047,2023-05-30,Sneha Joshi,customer47@example.com,North,Furniture,Chair,6,159.86,20%,767.33,Cash,57.0,
+ORD-1464,2024-12-06,Vikram Verma,customer464@example.com,South,Office Supplies,Printer Paper,7,17.25,0%,120.75,PayPal,33.0,5.0
+ORD-1152,2024-08-30,Karan Singh,customer152@example.com,East ,Electronics,Headphones,9,218.13,10%,1766.85,Credit Card,53.0,4.0
+ORD-1100,2024-08-26,Kavya Verma,customer100@example.com,North,Clothing,Jacket,8,40.35,5%,306.66,Cash,,
+ORD-1425,2024-01-15,Rahul Gupta,customer425@example.com,South,Clothing,Sneakers,2,57.51,10%,103.52,upi,,2.0
+ORD-1485,2024-08-28,Pooja Nair,customer485@example.com,East,Furniture,Bookshelf,6,151.9,5%,865.83,Cash,69.0,5.0
+ORD-1103,2023-10-08,Priya Gupta,customer103@example.com,South,Clothing,T-Shirt,6,62.38,10%,336.85,PayPal,55.0,5.0
+ORD-1175,2023-03-06,Vikram Singh,customer175@example.com,East,Electronics,Headphones,6,255.59,0%,1533.54,PayPal,56.0,3.0
+ORD-1312,2024-12-14,Amit Desai,customer312@example.com,West,Electronics,Keyboard,250,255.92,5%,60781.0,Debit Card,63.0,3.0
+ORD-1372,2023-12-18,Sneha Gupta,customer372@example.com,South,Furniture,Chair,8,239.9,10%,1727.28,UPI,,4.0
+ORD-1065,2023-08-13,Sneha Kapoor,customer65@example.com,south,Office Supplies,Pen Set,4,24.77,,99.08,Debit Card ,58.0,3.0
+ORD-1389,2024-01-28,Priya Mehta,customer389@example.com,North,Clothing,Sneakers,2,55.17,0%,110.34,Credit Card,31.0,3.0
+ORD-1412,2023-10-05,Priya Kapoor,customer412@example.com,South,Electronics,Headphones,5,358.16,0%,1790.8,upi,65.0,3.0
+ORD-1020,2024-11-07,Neha Nair,customer20@example.com,North,Office Supplies,Notebook,4,16.9,0%,67.6,Cash,49.0,5.0
+ORD-1205,2024-10-09,Sneha Reddy,customer205@example.com,South ,Electronics,Keyboard,3,369.84,0%,1109.52,PayPal,60.0,4.0
+ORD-1258,2024-09-12,Pooja Desai,customer258@example.com,North,Electronics,Monitor,4,340.71,0%,1362.84,Cash,58.0,5.0
+ORD-1176,2023-08-08,Rahul Kapoor,customer176@example.com,West,Furniture,Desk,9,159.24,0%,1433.16,Debit Card,20.0,4.0
+ORD-1215,2023-09-25,Amit Verma,customer215@example.com,East,Office Supplies,Notebook,5,19.78,5%,93.96,Debit Card,49.0,2.0
+ORD-1390,2023-01-19,Anjali Desai,customer390@example.com,West,Office Supplies,Pen Set,2,18.24,0%,36.48,CASH,27.0,4.0
+ORD-1007,2024-02-15,Amit Reddy,customer7@example.com,South,Office Supplies,Stapler,6,25.16,0%,150.96,,41.0,4.0
+ORD-1066,2024-03-18,Pooja Iyer,customer66@example.com,East,Office Supplies,Printer Paper,8,24.56,0%,196.48,Credit Card,58.0,3.0
+ORD-1161,2023-02-20,Sneha Mehta,customer161@example.com,East,Clothing,Jacket,7,61.3,0%,429.1,Debit Card,41.0,3.0
+ORD-1405,2024-03-08,Pooja Singh,customer405@example.com,East,Clothing,T-Shirt,8,37.03,0%,296.24,Cash,57.0,1.0
+ORD-1301,2024-12-12,Rohan Kapoor,customer301@example.com,South,Electronics,Headphones,5,233.29,0%,1166.45,PayPal,62.0,3.0
+ORD-1178,2024-10-10,Anjali Reddy,customer178@example.com,North,Clothing,T-Shirt,6,52.53,5%,299.42,Cash ,43.0,2.0
+ORD-1212,2024-08-27,Rahul Mehta,customer212@example.com,east,Electronics,Headphones,9,233.72,0%,2103.48,Debit Card,18.0,3.0
+ORD-1362,2023-01-05,Anjali Singh,customer362@example.com,North,Electronics,Headphones,8,321.54,5%,2443.7,Cash,66.0,4.0
+ORD-1028,2023-02-02,Pooja Reddy,customer28@example.com,East,Electronics,Monitor,1,349.13,10%,314.22,PayPal,18.0,4.0
+ORD-1280,2023-06-11,Rahul Sharma,customer280@example.com,east,Electronics,Monitor,3,311.13,0%,933.39,PayPal ,58.0,
+ORD-1309,2023-03-20,Pooja Gupta,customer309@example.com,North,Electronics,Keyboard,2,336.25,5%,638.88,UPI,62.0,4.0
+ORD-1024,2024-03-07,Amit Nair,customer24@example.com,East ,Office Supplies,Printer Paper,1,14.06,10%,12.65,UPI,51.0,5.0
+ORD-1305,2024-01-28,Karan Gupta,customer305@example.com,East,Office Supplies,Stapler,9,22.1,15%,169.06,Cash,42.0,3.0
+ORD-1269,2024-12-24,Anjali Patel,customer269@example.com,East,Electronics,Laptop,9,290.93,,2618.37,cash,55.0,4.0
+ORD-1203,2023-12-15,Aarav Iyer,customer203@example.com,North ,Electronics,Keyboard,8,239.03,20%,1529.79,Cash,,3.0
+ORD-1398,2024-12-13,Vikram Reddy,customer398@example.com,North ,Office Supplies,Notebook,8,19.9,0%,159.2,Cash,41.0,3.0
+ORD-1193,2024-01-01,Karan Kapoor,customer193@example.com,West,Clothing,Sneakers,4,47.41,0%,189.64,Debit Card,25.0,2.0
+ORD-1342,2024-10-03,Vikram Gupta,customer342@example.com,South,Clothing,T-Shirt,7,43.68,20%,244.61,PayPal,68.0,3.0
+ORD-1376,2024-07-06,Anjali Desai,customer376@example.com,West,Clothing,Sneakers,6,50.02,0%,300.12,credit card,21.0,5.0
+ORD-1368,2024-09-03,Karan Sharma,customer368@example.com,West,Furniture,Bookshelf,8,172.48,0%,1379.84,PayPal,55.0,5.0
+ORD-1216,2023-09-13,Sneha Patel,customer216@example.com,North,Electronics,Monitor,4,381.58,0%,1526.32,Debit Card,31.0,2.0
+ORD-1032,2024-06-01,Pooja Singh,customer32@example.com,South,Furniture,Bookshelf,9,194.53,0%,1750.77,PayPal,41.0,3.0
+ORD-1304,2023-05-24,Anjali Reddy,customer304@example.com,North,Clothing,Jacket,2,43.51,0%,87.02,Debit Card,41.0,5.0
+ORD-1072,2024-03-26,Rahul Singh,customer72@example.com,East,Clothing,Sneakers,7,43.84,0%,306.88,PayPal,69.0,4.0
+ORD-1334,2024-09-09,Vikram Nair,customer334@example.com,East,Electronics,Monitor,4,386.08,20%,1235.46,Debit Card,47.0,3.0
+ORD-1341,2024-06-08,Sneha Verma,customer341@example.com,North,Clothing,T-Shirt,7,54.34,0%,380.38,credit card,52.0,4.0
+ORD-1015,2024-06-12,Kavya Iyer,customer15@example.com,North,Electronics,Keyboard,8,211.67,10%,1524.02,UPI,31.0,5.0
+ORD-1183,2023-06-21,Anjali Iyer,customer183@example.com,EAST,Furniture,Chair,8,231.2,0%,1849.6,UPI,53.0,
+ORD-1462,2023-05-21,Sneha Desai,customer462@example.com,South,Clothing,T-Shirt,9,51.84,20%,373.25,CREDIT CARD,45.0,3.0
+ORD-1066,2024-03-18,Pooja Iyer,customer66@example.com,East,Office Supplies,Printer Paper,8,24.56,0%,196.48,Credit Card,58.0,3.0
+ORD-1180,2024-02-02,Vikram Mehta,customer180@example.com,North,Clothing,Jacket,2,43.88,0%,87.76,debit card,24.0,3.0
+ORD-1267,2024-03-10,Priya Gupta,customer267@example.com,South,Electronics,Headphones,9,362.28,10%,2934.47,Credit Card,24.0,4.0
+ORD-1040,2023-01-15,Rohan Joshi,customer40@example.com,North,Furniture,Bookshelf,3,165.96,0%,497.88,PayPal,45.0,3.0
+ORD-1461,2023-10-21,Sneha Patel,customer461@example.com,South,Electronics,Headphones,4,358.79,0%,1435.16,CREDIT CARD,,3.0
+ORD-1306,2024-11-01,Pooja Nair,customer306@example.com,north,Furniture,Desk,3,249.24,5%,710.33,Debit Card,31.0,4.0
+ORD-1041,2023-05-18,Priya Nair,customer41@example.com,East,Clothing,Sneakers,9,47.42,0%,426.78,credit card,28.0,3.0
+ORD-1198,2024-02-22,Karan Nair,customer198@example.com,North,Electronics,Keyboard,2,367.42,5%,698.1,Debit Card,,4.0
+ORD-1370,2023-02-12,Rohan Patel,customer370@example.com,West,Office Supplies,Printer Paper,3,21.96,5%,62.59,Debit Card ,21.0,4.0
+ORD-1307,2023-12-22,Sneha Joshi,customer307@example.com,North,Office Supplies,Notebook,3,16.43,10%,44.36,Debit Card,68.0,5.0
+ORD-1225,2023-07-03,Pooja Singh,customer225@example.com,West,Clothing,Sneakers,6,53.24,15%,271.52,PayPal,60.0,
+ORD-1303,2023-11-01,Anjali Sharma,customer303@example.com,North ,Office Supplies,Printer Paper,1,15.66,10%,14.09,PayPal,52.0,2.0
+ORD-1332,2023-02-10,Pooja Singh,customer332@example.com,North,Office Supplies,Pen Set,3,25.09,5%,71.51,PayPal,,3.0
+ORD-1310,2023-10-12,Rahul Kapoor,customer310@example.com,South,Office Supplies,Stapler,5,25.44,10%,114.48,Debit Card,,
+ORD-1266,2023-08-12,Karan Reddy,customer266@example.com,South,Furniture,Desk,4,221.37,5%,841.21,,40.0,4.0
+ORD-1150,2023-06-03,Rahul Mehta,customer150@example.com,west,Clothing,Jacket,8,49.05,0%,392.4,PayPal,27.0,4.0
+ORD-1069,2023-01-29,Vikram Sharma,customer69@example.com,NORTH,Furniture,Desk,9,172.78,20%,1244.02,UPI,32.0,4.0
+ORD-1014,2023-03-01,Anjali Patel,customer14@example.com,north,Furniture,Chair,1,250.26,10%,225.23,credit card,45.0,
+ORD-1369,2024-02-22,Priya Patel,customer369@example.com,North,Clothing,Jacket,2,61.55,5%,116.94,UPI,31.0,5.0
+ORD-1264,2024-02-14,Neha Mehta,customer264@example.com,West,Clothing,T-Shirt,2,45.28,15%,76.98,Cash,64.0,5.0
+ORD-1422,2023-01-27,Rahul Iyer,customer422@example.com,North,Electronics,Monitor,2,256.34,10%,461.41,Cash,34.0,4.0
+ORD-1498,2024-10-04,Pooja Verma,customer498@example.com,North,Furniture,Chair,4,246.6,0%,986.4,Credit Card ,,3.0
+ORD-1109,2023-07-29,Vikram Iyer,customer109@example.com,North,Clothing,T-Shirt,8,50.51,20%,323.26,PayPal,20.0,4.0
+ORD-1470,2024-12-24,Pooja Gupta,customer470@example.com,East,Furniture,Bookshelf,6,140.13,0%,840.78,Debit Card,31.0,1.0
+ORD-1244,2024-02-21,Vikram Verma,customer244@example.com,West,Office Supplies,Printer Paper,2,25.09,15%,42.65,,28.0,3.0
+ORD-1482,2024-07-18,Amit Reddy,customer482@example.com,East,Office Supplies,Pen Set,8,16.35,10%,117.72,,35.0,4.0
+ORD-1012,2023-01-22,Pooja Nair,customer12@example.com,South,Office Supplies,Notebook,9,14.57,5%,124.57,,39.0,5.0
+ORD-1427,2023-09-26,Amit Singh,customer427@example.com,North,Clothing,Sneakers,3,46.04,5%,131.21,PayPal,56.0,2.0
+ORD-1200,2024-11-20,Aarav Singh,customer200@example.com,East,Office Supplies,Printer Paper,8,20.37,0%,162.96,Debit Card ,35.0,2.0
+ORD-1160,2024-05-24,Karan Joshi,customer160@example.com,East ,Electronics,Monitor,4,347.66,15%,1182.04,Credit Card ,55.0,
+ORD-1331,2023-02-20,Karan Joshi,customer331@example.com,North,Electronics,Monitor,8,374.28,0%,2994.24,Debit Card,57.0,5.0
+ORD-1037,2024-04-18,Neha Gupta,customer37@example.com,West,Office Supplies,Notebook,5,17.82,0%,89.1,UPI,18.0,4.0
+ORD-1294,2024-09-29,Sneha Singh,customer294@example.com,North,Clothing,Sneakers,1,35.59,10%,32.03,Cash,62.0,
+ORD-1002,2024-08-07,Sneha Patel,customer2@example.com,East,Clothing,Jacket,7,42.27,0%,295.89,Credit Card,53.0,3.0
+ORD-1025,2024-09-06,Rohan Verma,customer25@example.com,East,Electronics,Laptop,3,363.61,0%,1090.83,Debit Card,57.0,5.0
+ORD-1474,2024-06-29,Rahul Singh,customer474@example.com,East,Furniture,Bookshelf,1,160.64,0%,160.64,Cash,28.0,
+ORD-1353,2024-04-29,Vikram Mehta,customer353@example.com,South,Office Supplies,Printer Paper,1,24.07,20%,19.26,PAYPAL,47.0,5.0
+ORD-1327,2024-10-19,Karan Mehta,customer327@example.com,North,Office Supplies,Notebook,9,19.88,0%,178.92,Cash,37.0,2.0
+ORD-1420,2024-09-03,Karan Singh,customer420@example.com,south,Office Supplies,Printer Paper,3,18.73,5%,53.38,UPI,67.0,2.0
+ORD-1129,2024-12-20,Rahul Kapoor,customer129@example.com,South,Office Supplies,Stapler,1,20.97,0%,20.97,Debit Card,39.0,2.0
+ORD-1371,2023-02-05,Sneha Reddy,customer371@example.com,West,Furniture,Chair,9,153.42,5%,1311.74,Debit Card,35.0,4.0
+ORD-1492,2024-04-26,Sneha Kapoor,customer492@example.com,East,Office Supplies,Notebook,2,18.33,5%,34.83,Debit Card,68.0,4.0
+ORD-1414,2024-12-02,Rohan Nair,customer414@example.com,South ,Electronics,Monitor,4,236.44,,945.76,paypal,22.0,4.0
+ORD-1231,2024-09-28,Karan Singh,customer231@example.com,West,Furniture,Bookshelf,5,238.2,0%,1191.0,PayPal,65.0,2.0
+ORD-1429,2023-02-06,Priya Desai,customer429@example.com,North,Clothing,Sneakers,6,41.25,0%,247.5,Cash,34.0,2.0
+ORD-1304,2023-05-24,Anjali Reddy,customer304@example.com,North,Clothing,Jacket,2,43.51,0%,87.02,Debit Card,41.0,5.0
+ORD-1117,2024-11-02,Aarav Gupta,customer117@example.com,East,Office Supplies,Stapler,1,23.58,0%,23.58,Debit Card,69.0,1.0
+ORD-1310,2023-10-12,Rahul Kapoor,customer310@example.com,South,Office Supplies,Stapler,5,25.44,10%,114.48,Debit Card,,
+ORD-1171,2024-09-21,Sneha Patel,customer171@example.com,South,Office Supplies,Stapler,8,24.15,10%,173.88,PayPal,20.0,4.0
+ORD-1240,2023-03-13,Aarav Kapoor,customer240@example.com,South,Clothing,Jacket,2,53.68,5%,101.99,Cash,22.0,4.0
+ORD-1223,2023-08-12,Karan Gupta,customer223@example.com,North,Clothing,Jacket,4,62.51,10%,225.04,UPI,35.0,4.0
+ORD-1435,2023-09-30,Priya Gupta,customer435@example.com,East,Electronics,Laptop,3,358.16,15%,913.31,Cash,42.0,2.0
+ORD-1347,2024-05-24,Rohan Kapoor,customer347@example.com,EAST,Furniture,Bookshelf,4,237.93,0%,951.72,Credit Card,48.0,5.0
+ORD-1322,2024-07-02,Rohan Verma,customer322@example.com,North,Furniture,Chair,2,193.27,20%,309.23,cash,44.0,
+ORD-1339,2024-08-27,Neha Mehta,customer339@example.com,North,Clothing,Jacket,9,48.69,5%,416.3,,68.0,3.0
+ORD-1407,2023-06-11,Amit Sharma,customer407@example.com,North,Clothing,Sneakers,9,35.02,10%,283.66,PAYPAL,34.0,4.0
+ORD-1416,2023-08-04,Vikram Nair,customer416@example.com,WEST,Electronics,Monitor,6,358.16,0%,2148.96,upi,23.0,5.0
+ORD-1458,2024-10-19,Kavya Singh,customer458@example.com,West ,Office Supplies,Pen Set,5,17.12,15%,72.76,CASH,34.0,4.0
+ORD-1114,2024-08-24,Priya Joshi,customer114@example.com,North ,Electronics,Laptop,1,228.83,0%,228.83,UPI,66.0,4.0
+ORD-1453,2024-08-08,Priya Gupta,customer453@example.com,East,Electronics,Laptop,4,337.9,5%,1284.02,Cash,38.0,4.0
+ORD-1068,2024-05-21,Priya Desai,customer68@example.com,North,Electronics,Headphones,4,321.92,15%,1094.53,Cash,50.0,4.0
+ORD-1417,2023-09-05,Anjali Mehta,customer417@example.com,west,Office Supplies,Pen Set,9,20.47,0%,184.23,,48.0,4.0
+ORD-1391,2024-03-18,Sneha Patel,customer391@example.com,SOUTH,Electronics,Monitor,6,351.74,5%,2004.92,Debit Card,31.0,4.0
+ORD-1355,2023-11-16,Amit Mehta,customer355@example.com,EAST,Office Supplies,Pen Set,1,23.29,10%,20.96,Cash,29.0,4.0
+ORD-1337,2024-07-06,Aarav Verma,customer337@example.com,East,Office Supplies,Pen Set,9,23.15,0%,208.35,Credit Card,43.0,4.0
+ORD-1222,2024-05-23,Aarav Mehta,customer222@example.com,North,Office Supplies,Printer Paper,2,15.43,0%,30.86,Cash ,30.0,3.0
+ORD-1126,2023-08-02,Neha Singh,customer126@example.com,North ,Furniture,Bookshelf,9,187.36,5%,1601.93,Debit Card,41.0,5.0
+ORD-1317,2024-11-10,Pooja Verma,customer317@example.com,South,Office Supplies,Stapler,8,22.23,5%,168.95,UPI,65.0,
+ORD-1070,2023-02-23,Sneha Iyer,customer70@example.com,North,Electronics,Monitor,8,219.09,15%,1489.81,UPI,66.0,4.0
+ORD-1179,2023-02-11,Priya Desai,customer179@example.com,north,Office Supplies,Notebook,4,22.82,5%,86.72,Debit Card,46.0,2.0
+ORD-1421,2024-09-22,Amit Reddy,customer421@example.com,West,Electronics,Keyboard,7,342.8,10%,2159.64,upi,35.0,4.0
+ORD-1475,2024-08-21,Anjali Sharma,customer475@example.com,East,Furniture,Desk,5,246.83,10%,1110.74,,54.0,4.0
+ORD-1165,2023-07-30,Priya Joshi,customer165@example.com,West ,Furniture,Desk,5,254.36,10%,1144.62,Credit Card,23.0,4.0
+ORD-1134,2023-04-08,Pooja Iyer,customer134@example.com,East,Office Supplies,Stapler,1,16.36,0%,16.36,Cash,45.0,4.0
+ORD-1030,2023-03-14,Aarav Joshi,customer30@example.com,west,Office Supplies,Pen Set,9,17.05,5%,145.78,cash,30.0,3.0
+ORD-1204,2023-03-13,Kavya Singh,customer204@example.com,East ,Electronics,Monitor,1,379.2,15%,322.32,credit card,44.0,2.0
+ORD-1010,2024-05-29,Vikram Reddy,customer10@example.com,East,Furniture,Desk,2,225.39,0%,450.78,PayPal,40.0,5.0
+ORD-1291,2024-02-10,Neha Sharma,customer291@example.com,north,Electronics,Keyboard,2,330.15,10%,594.27,Credit Card,59.0,4.0
+ORD-1017,2024-09-26,Kavya Verma,customer17@example.com,East,Electronics,Headphones,5,215.63,0%,1078.15,Cash,40.0,5.0
+ORD-1067,2023-08-07,Kavya Patel,customer67@example.com,East,Furniture,Chair,6,204.34,10%,1103.44,Debit Card,44.0,5.0
+ORD-1488,2024-09-08,Pooja Patel,customer488@example.com,WEST,Office Supplies,Notebook,9,16.11,0%,144.99,Debit Card,37.0,5.0
+ORD-1166,2023-01-06,Pooja Verma,customer166@example.com,SOUTH,Clothing,T-Shirt,3,37.15,20%,89.16,Debit Card,62.0,5.0
+ORD-1495,2024-01-24,Neha Nair,customer495@example.com,South,Office Supplies,Pen Set,6,17.18,0%,103.08,PayPal,24.0,1.0
+ORD-1119,2023-01-24,Kavya Sharma,customer119@example.com,South,Office Supplies,Pen Set,9,16.45,0%,148.05,Cash ,68.0,5.0
+ORD-1352,2023-05-20,Karan Patel,customer352@example.com,South,Office Supplies,Pen Set,2,23.57,20%,37.71,Debit Card,45.0,4.0
+ORD-1214,2023-02-14,Sneha Kapoor,customer214@example.com,West,Office Supplies,Notebook,5,25.43,,120.79,,999.0,3.0
+ORD-1209,2024-05-15,Karan Reddy,customer209@example.com,North,Office Supplies,Printer Paper,8,20.36,10%,146.59,Cash,41.0,5.0
+ORD-1297,2024-11-11,Pooja Singh,customer297@example.com,south,Clothing,Sneakers,6,58.34,0%,350.04,Credit Card,57.0,4.0
+ORD-1300,2024-10-25,Rohan Iyer,customer300@example.com,West,Office Supplies,Printer Paper,8,22.01,,176.08,PayPal ,39.0,5.0
+ORD-1236,2023-11-26,Pooja Singh,customer236@example.com,West,Office Supplies,Notebook,6,18.1,10%,97.74,Credit Card,35.0,4.0
+ORD-1029,2023-01-27,Sneha Reddy,customer29@example.com,SOUTH,Office Supplies,Pen Set,6,24.27,15%,123.78,UPI,150.0,3.0
+ORD-1275,2023-04-01,Rohan Kapoor,customer275@example.com,East,Furniture,Bookshelf,3,176.3,0%,528.9,Debit Card,43.0,3.0
+ORD-1142,2023-08-17,Vikram Kapoor,customer142@example.com,North,Clothing,Sneakers,2,42.31,0%,84.62,Cash,19.0,4.0
+ORD-1268,2023-05-24,Karan Patel,customer268@example.com,North,Electronics,Keyboard,5,217.25,5%,1031.94,cash,57.0,5.0
+ORD-1354,2023-10-29,Amit Patel,customer354@example.com,South,Office Supplies,Notebook,7,15.66,5%,104.14,Cash,130.0,3.0
+ORD-1259,2024-03-08,Sneha Patel,customer259@example.com,WEST,Office Supplies,Printer Paper,4,19.53,0%,78.12,Debit Card,21.0,3.0
+ORD-1283,2024-07-03,Pooja Iyer,customer283@example.com,South,Electronics,Keyboard,8,373.28,0%,2986.24,Debit Card,32.0,4.0
+ORD-1106,2024-07-10,Vikram Iyer,customer106@example.com,East,Furniture,Desk,5,228.02,0%,1140.1,Debit Card,31.0,3.0
+ORD-1094,2023-08-02,Priya Patel,customer94@example.com,East,Furniture,Desk,3,151.29,15%,385.79,UPI,42.0,3.0
+ORD-1476,2024-05-10,Kavya Reddy,customer476@example.com,east,Furniture,Chair,5,196.39,20%,785.56,UPI,31.0,5.0
+ORD-1192,2023-01-21,Rahul Verma,customer192@example.com,East,Electronics,Laptop,9,242.31,20%,1744.63,Debit Card,49.0,
+ORD-1436,2024-11-01,Karan Verma,customer436@example.com,East,Electronics,Headphones,7,281.73,20%,1577.69,Credit Card,54.0,5.0
+ORD-1419,2023-11-22,Karan Nair,customer419@example.com,South,Clothing,Jacket,4,37.78,0%,151.12,Cash,52.0,
+ORD-1003,2023-12-01,Rahul Singh,customer3@example.com,North,Office Supplies,Printer Paper,1,19.76,10%,17.78,PayPal,24.0,2.0
+ORD-1042,2024-10-16,Pooja Desai,customer42@example.com,East,Office Supplies,Pen Set,9,17.81,5%,152.28,Credit Card,48.0,3.0
+ORD-1163,2024-06-15,Sneha Reddy,customer163@example.com,East,Electronics,Monitor,5,387.22,10%,1742.49,PayPal,51.0,3.0
+ORD-1410,2024-10-18,Karan Sharma,customer410@example.com,South,Office Supplies,Notebook,2,14.42,20%,23.07,Debit Card,43.0,5.0
+ORD-1170,2024-12-24,Karan Iyer,customer170@example.com,North,Furniture,Chair,8,151.64,5%,1152.46,UPI,29.0,4.0
+ORD-1226,2024-09-23,Aarav Reddy,customer226@example.com,NORTH,Electronics,Laptop,2,293.7,10%,528.66,UPI ,19.0,4.0
+ORD-1090,2024-07-28,Amit Kapoor,customer90@example.com,north,Electronics,Monitor,1,212.24,0%,212.24,PayPal,61.0,3.0
+ORD-1383,2024-04-13,Karan Desai,customer383@example.com,East,Office Supplies,Printer Paper,1,22.73,5%,21.59,UPI,37.0,4.0
+ORD-1221,2023-08-27,Rohan Reddy,customer221@example.com,South,Office Supplies,Stapler,7,14.36,20%,80.42,Debit Card,57.0,4.0
+ORD-1159,2023-05-05,Sneha Nair,customer159@example.com,West,Office Supplies,Pen Set,2,17.54,0%,35.08,PayPal,33.0,3.0
+ORD-1194,2024-10-11,Aarav Joshi,customer194@example.com,South,Electronics,Monitor,9,290.97,10%,2356.86,Cash,54.0,4.0
+ORD-1172,2024-05-31,Priya Reddy,customer172@example.com,North,Furniture,Chair,8,214.01,15%,1455.27,Cash,64.0,1.0
+ORD-1455,2023-03-22,Vikram Gupta,customer455@example.com,East,Electronics,Laptop,9,218.9,10%,1773.09,Cash,43.0,4.0
+ORD-1447,2024-08-18,Sneha Singh,customer447@example.com,North ,Office Supplies,Printer Paper,5,21.87,5%,103.88,credit card,,
+ORD-1265,2023-01-08,Neha Nair,customer265@example.com,South,Electronics,Laptop,5,241.9,10%,1088.55,Credit Card,26.0,4.0
+ORD-1314,2023-04-11,Kavya Kapoor,customer314@example.com,West ,Furniture,Bookshelf,2,178.46,10%,321.23,PayPal,32.0,4.0
+ORD-1276,2023-10-13,Rahul Reddy,customer276@example.com,South,Furniture,Chair,5,253.7,15%,1078.22,UPI ,22.0,5.0
+ORD-1013,2024-01-06,Sneha Iyer,customer13@example.com,South,Clothing,T-Shirt,7,39.15,15%,232.94,,46.0,5.0
+ORD-1497,2024-04-13,Sneha Sharma,customer497@example.com,east,Office Supplies,Printer Paper,4,16.46,5%,62.55,Credit Card,65.0,5.0
+ORD-1235,2023-04-08,Rohan Singh,customer235@example.com,South,Clothing,Jacket,2,62.62,10%,112.72,Cash ,68.0,2.0
+ORD-1230,2024-08-11,Sneha Iyer,customer230@example.com,South,Electronics,Keyboard,9,387.95,10%,3142.4,Cash,28.0,4.0
+ORD-1286,2023-10-12,Amit Mehta,customer286@example.com,South,Electronics,Keyboard,3,271.63,0%,814.89,Cash,19.0,
+ORD-1182,2024-06-20,Rohan Desai,customer182@example.com,East,Office Supplies,Stapler,4,18.86,20%,60.35,Credit Card,30.0,4.0
+ORD-1162,2024-01-13,Anjali Joshi,customer162@example.com,West,Electronics,Keyboard,2,372.3,10%,670.14,Debit Card,,5.0
+ORD-1157,2023-02-20,Rahul Reddy,customer157@example.com,north,Office Supplies,Printer Paper,3,15.33,15%,39.09,Debit Card,38.0,4.0
+ORD-1232,2023-06-04,Rohan Verma,customer232@example.com,NORTH,Clothing,Sneakers,9,57.25,0%,515.25,Debit Card,37.0,3.0
+ORD-1335,2024-04-06,Amit Singh,customer335@example.com,East,Office Supplies,Printer Paper,5,22.94,0%,114.7,Debit Card,46.0,
+ORD-1399,2024-09-29,Neha Kapoor,customer399@example.com,East,Furniture,Desk,2,247.16,15%,420.17,PayPal,42.0,4.0
+ORD-1006,2023-11-20,Aarav Singh,customer6@example.com,North,Office Supplies,Printer Paper,5,17.97,0%,89.85,UPI,32.0,3.0
+ORD-1108,2023-04-18,Amit Iyer,customer108@example.com,North,Electronics,Keyboard,5,278.23,5%,1321.59,Debit Card,44.0,4.0
+ORD-1486,2024-06-06,Priya Singh,customer486@example.com,East,Office Supplies,Notebook,7,16.48,10%,103.82,Cash,58.0,1.0
+ORD-1054,2023-03-02,Sneha Mehta,customer54@example.com,South,Office Supplies,Notebook,9,15.51,20%,111.67,paypal,58.0,4.0
+ORD-1345,2023-08-24,Anjali Nair,customer345@example.com,South,Office Supplies,Printer Paper,5,18.92,15%,80.41,UPI ,,5.0
+ORD-1428,2023-08-30,Neha Sharma,customer428@example.com,South,Electronics,Headphones,2,249.45,10%,449.01,Cash,39.0,4.0
+ORD-1035,2024-09-20,Aarav Desai,customer35@example.com,South,Electronics,Monitor,9,275.08,5%,2351.93,PayPal ,57.0,4.0
+ORD-1174,2023-02-25,Pooja Kapoor,customer174@example.com,North,Electronics,Laptop,9,239.76,0%,2157.84,Debit Card ,35.0,3.0
+ORD-1281,2024-08-01,Anjali Kapoor,customer281@example.com,South,Electronics,Monitor,9,339.56,10%,2750.44,Debit Card,19.0,2.0
+ORD-1099,2024-12-27,Sneha Iyer,customer99@example.com,South,Clothing,Jacket,4,63.85,5%,242.63,Cash,18.0,4.0
+ORD-1228,2023-01-30,Priya Reddy,customer228@example.com,South,Office Supplies,Notebook,6,20.38,0%,122.28,DEBIT CARD,32.0,5.0
+ORD-1439,2024-01-04,Kavya Patel,customer439@example.com,East,Office Supplies,Printer Paper,2,21.84,0%,43.68,PayPal,48.0,3.0
+ORD-1112,2023-03-15,Neha Desai,customer112@example.com,South ,Furniture,Desk,2,233.96,5%,444.52,Credit Card,40.0,2.0
+ORD-1440,2024-12-20,Priya Verma,customer440@example.com,South,Clothing,Sneakers,7,48.46,20%,271.38,Debit Card ,20.0,5.0
+ORD-1128,2023-10-18,Vikram Singh,customer128@example.com,South,Electronics,Monitor,6,319.57,20%,1533.94,UPI,32.0,
+ORD-1397,2024-01-21,Vikram Desai,customer397@example.com,South,Furniture,Chair,6,236.17,5%,1346.17,Cash,43.0,
+ORD-1382,2023-05-19,Neha Nair,customer382@example.com,north,Office Supplies,Pen Set,6,15.14,10%,81.76,UPI,52.0,4.0
+ORD-1217,2024-01-16,Priya Mehta,customer217@example.com,East,Electronics,Monitor,7,239.44,0%,1676.08,PayPal,31.0,4.0
+ORD-1496,2024-07-23,Karan Patel,customer496@example.com,West,Furniture,Chair,3,213.26,15%,543.81,Debit Card,65.0,4.0
+ORD-1477,2023-12-30,Kavya Patel,customer477@example.com,NORTH,Office Supplies,Pen Set,9,19.71,0%,177.39,Debit Card,33.0,4.0
+ORD-1357,2024-07-05,Sneha Desai,customer357@example.com,North,Office Supplies,Notebook,8,18.68,20%,119.55,debit card,33.0,3.0
+ORD-1147,2023-11-09,Karan Patel,customer147@example.com,West,Office Supplies,Printer Paper,8,16.43,0%,131.44,PayPal,55.0,4.0
+ORD-1285,2024-10-13,Karan Nair,customer285@example.com,East,Furniture,Desk,2,217.65,20%,348.24,,24.0,3.0
+ORD-1023,2024-07-04,Aarav Desai,customer23@example.com,West,Clothing,Sneakers,4,60.48,5%,229.82,Credit Card,35.0,4.0
+ORD-1098,2024-03-26,Aarav Mehta,customer98@example.com,West,Electronics,Laptop,9,236.89,0%,2132.01,UPI,42.0,2.0
+ORD-1189,2024-08-03,Amit Kapoor,customer189@example.com,East,Furniture,Desk,9,152.05,20%,1094.76,Credit Card,,4.0
+ORD-1118,2024-09-07,Rahul Singh,customer118@example.com,west,Furniture,Bookshelf,6,151.98,0%,911.88,Credit Card,68.0,4.0
+ORD-1441,2023-06-21,Rohan Patel,customer441@example.com,North,Electronics,Monitor,9,280.73,,2021.26,PayPal ,,2.0
+ORD-1249,2024-07-10,Anjali Nair,customer249@example.com,North,Furniture,Bookshelf,9,173.71,20%,1250.71,Credit Card,36.0,3.0
+ORD-1279,2024-03-11,Karan Iyer,customer279@example.com,south,Clothing,Sneakers,1,47.09,15%,40.03,Debit Card,41.0,4.0
+ORD-1144,2023-08-13,Amit Desai,customer144@example.com,South,Office Supplies,Pen Set,5,23.04,0%,115.2,UPI,38.0,4.0
+ORD-1060,2023-05-01,Neha Reddy,customer60@example.com,West,Office Supplies,Printer Paper,6,14.05,5%,80.09,Cash,49.0,4.0
+ORD-1321,2023-05-25,Karan Joshi,customer321@example.com,North,Office Supplies,Pen Set,8,21.32,5%,162.03,Cash,56.0,5.0
+ORD-1251,2024-12-21,Neha Patel,customer251@example.com,North,Clothing,Jacket,1,48.75,,48.75,PayPal,20.0,
+ORD-1442,2024-11-20,Anjali Iyer,customer442@example.com,North,Office Supplies,Printer Paper,7,24.5,0%,171.5,UPI,51.0,4.0
+ORD-1151,2024-09-25,Amit Mehta,customer151@example.com,North,Clothing,Jacket,8,42.78,0%,342.24,Debit Card,44.0,5.0
+ORD-1186,2024-07-14,Karan Sharma,customer186@example.com,North,Furniture,Desk,3,252.98,5%,720.99,UPI,24.0,2.0
+ORD-1169,2023-02-18,Neha Verma,customer169@example.com,West,Clothing,Sneakers,9,51.59,15%,394.66,PayPal,31.0,4.0
+ORD-1011,2024-07-02,Pooja Mehta,customer11@example.com,South,Clothing,Sneakers,8,39.51,0%,316.08,cash,53.0,4.0
+ORD-1395,2023-07-19,Sneha Desai,customer395@example.com,South,Office Supplies,Stapler,5,17.86,10%,80.37,UPI,35.0,5.0
+ORD-1277,2024-02-10,Karan Desai,customer277@example.com,North ,Office Supplies,Printer Paper,9,18.4,0%,165.6,PayPal,66.0,4.0
+ORD-1387,2024-04-01,Amit Nair,customer387@example.com,East,Clothing,T-Shirt,1,47.74,10%,42.97,Credit Card,31.0,4.0
+ORD-1181,2024-09-15,Aarav Iyer,customer181@example.com,South,Clothing,Sneakers,1,46.14,10%,41.53,Credit Card,67.0,3.0
+ORD-1408,2023-01-11,Sneha Kapoor,customer408@example.com,West,Electronics,Laptop,2,288.54,,519.37,PayPal,63.0,4.0
+ORD-1127,2023-07-11,Rohan Verma,customer127@example.com,East,Electronics,Monitor,1,267.44,5%,254.07,Debit Card,24.0,5.0
+ORD-1375,2024-03-01,Vikram Sharma,customer375@example.com,South,Electronics,Keyboard,5,309.39,0%,1546.95,credit card,18.0,4.0
+ORD-1057,2023-08-02,Anjali Nair,customer57@example.com,East,Office Supplies,Printer Paper,8,16.08,0%,128.64,Debit Card,34.0,4.0
+ORD-1491,2024-11-17,Anjali Singh,customer491@example.com,North,Office Supplies,Pen Set,6,17.84,15%,90.98,Debit Card,31.0,3.0
+ORD-1237,2024-05-21,Pooja Joshi,customer237@example.com,West,Office Supplies,Notebook,2,14.6,10%,26.28,Credit Card,,3.0
+ORD-1074,2024-10-18,Neha Joshi,customer74@example.com,south,Electronics,Headphones,7,360.52,0%,2523.64,Credit Card,20.0,
+ORD-1243,2023-04-20,Karan Iyer,customer243@example.com,NORTH,Office Supplies,Pen Set,9,16.54,15%,126.53,upi,29.0,
+ORD-1091,2024-01-16,Karan Joshi,customer91@example.com,West,Office Supplies,Pen Set,4,23.55,20%,75.36,UPI,44.0,
+ORD-1388,2024-11-22,Karan Joshi,customer388@example.com,East,Electronics,Keyboard,2,219.26,0%,438.52,Credit Card,64.0,4.0
+ORD-1349,2024-11-29,Kavya Mehta,customer349@example.com,South,Electronics,Monitor,4,240.19,0%,960.76,Credit Card ,,
+ORD-1284,2023-12-08,Aarav Reddy,customer284@example.com,West,Office Supplies,Pen Set,9,19.03,10%,154.14,UPI,52.0,3.0
+ORD-1156,2024-04-22,Neha Sharma,customer156@example.com,north,Furniture,Desk,1,199.46,15%,169.54,Debit Card,36.0,4.0
+ORD-1480,2024-04-02,Kavya Verma,customer480@example.com,North,Furniture,Desk,7,165.82,0%,1160.74,Cash,38.0,5.0
+ORD-1085,2023-12-21,Anjali Patel,customer85@example.com,North,Electronics,Keyboard,5,312.05,15%,1326.21,UPI,27.0,5.0
+ORD-1190,2024-10-09,Rahul Reddy,customer190@example.com,West,Clothing,Jacket,7,42.94,10%,270.52,UPI,66.0,5.0
+ORD-1039,2023-11-03,Karan Reddy,customer39@example.com,West,Office Supplies,Printer Paper,5,21.21,0%,106.05,Credit Card,62.0,1.0
+ORD-1111,2023-05-08,Vikram Singh,customer111@example.com,South,Electronics,Laptop,9,341.6,0%,3074.4,PayPal,,2.0
+ORD-1393,2023-03-15,Anjali Mehta,customer393@example.com,West,Office Supplies,Stapler,9,23.85,15%,182.45,cash,24.0,4.0
+ORD-1344,2023-12-08,Sneha Desai,customer344@example.com,South,Office Supplies,Notebook,5,21.03,10%,94.64,Cash,58.0,2.0
+ORD-1449,2023-10-07,Priya Verma,customer449@example.com,South,Office Supplies,Notebook,5,22.82,15%,96.98,PayPal,59.0,
+ORD-1004,2023-01-14,Sneha Iyer,customer4@example.com,East,Electronics,Laptop,1,332.99,10%,299.69,Debit Card,,5.0
+ORD-1305,2024-01-28,Karan Gupta,customer305@example.com,East,Office Supplies,Stapler,9,22.1,15%,169.06,Cash,42.0,3.0
+ORD-1104,2023-01-03,Priya Joshi,customer104@example.com,EAST,Office Supplies,Pen Set,7,16.55,0%,115.85,PAYPAL,67.0,3.0
+ORD-1142,2023-08-17,Vikram Kapoor,customer142@example.com,North,Clothing,Sneakers,2,42.31,0%,84.62,Cash,19.0,4.0
+ORD-1472,2024-04-13,Rahul Nair,customer472@example.com,South,Electronics,Headphones,6,371.01,0%,2226.06,PayPal,38.0,5.0
+ORD-1164,2024-11-23,Rohan Reddy,customer164@example.com,North,Office Supplies,Stapler,2,25.79,0%,51.58,,36.0,4.0
+ORD-1105,2023-05-12,Sneha Singh,customer105@example.com,North,Office Supplies,Notebook,7,19.64,15%,116.86,Credit Card,69.0,4.0
+ORD-1241,2023-06-23,Karan Iyer,customer241@example.com,North,Office Supplies,Printer Paper,1,23.01,10%,20.71,PayPal,49.0,5.0
+ORD-1452,2024-08-08,Rahul Nair,customer452@example.com,North,Office Supplies,Notebook,9,23.94,5%,204.69,UPI,56.0,2.0
+ORD-1253,2023-02-02,Aarav Sharma,customer253@example.com,SOUTH,Electronics,Keyboard,6,237.42,0%,1424.52,Debit Card ,59.0,4.0
+ORD-1262,2024-09-08,Priya Sharma,customer262@example.com,East,Furniture,Chair,4,196.73,10%,708.23,Credit Card,61.0,5.0
+ORD-1409,2024-06-19,Pooja Desai,customer409@example.com,West ,Clothing,T-Shirt,4,58.24,5%,221.31,PayPal,31.0,5.0
+ORD-1400,2024-02-10,Amit Patel,customer400@example.com,North,Furniture,Bookshelf,5,157.27,15%,668.4,Credit Card,,3.0
+ORD-1082,2023-06-03,Amit Patel,customer82@example.com,West,Clothing,Sneakers,3,46.88,0%,140.64,Debit Card,35.0,4.0
+ORD-1448,2024-09-16,Rahul Iyer,customer448@example.com,East,Electronics,Monitor,5,262.04,0%,1310.2,cash,22.0,3.0
+ORD-1071,2024-06-15,Vikram Sharma,customer71@example.com,east,Furniture,Desk,9,211.35,15%,1616.83,UPI,69.0,4.0
+ORD-1289,2023-06-30,Vikram Desai,customer289@example.com,west,Electronics,Monitor,8,232.65,5%,1768.14,Credit Card,56.0,5.0
+ORD-1087,2023-11-15,Kavya Desai,customer87@example.com,North,Office Supplies,Printer Paper,3,25.8,0%,77.4,DEBIT CARD,22.0,3.0
+ORD-1064,2023-06-06,Priya Nair,customer64@example.com,West,Office Supplies,Printer Paper,4,15.52,15%,52.77,UPI,32.0,4.0
+ORD-1270,2024-12-09,Pooja Patel,customer270@example.com,North,Electronics,Headphones,6,370.65,5%,2112.7,Debit Card,59.0,4.0
+ORD-1093,2023-11-11,Anjali Sharma,customer93@example.com,East,Furniture,Chair,1,188.96,10%,170.06,PAYPAL,18.0,
+ORD-1318,2024-07-10,Karan Kapoor,customer318@example.com,north,Furniture,Chair,2,142.79,5%,271.3,PayPal,40.0,4.0
+ORD-1274,2024-01-03,Pooja Kapoor,customer274@example.com,EAST,Office Supplies,Printer Paper,5,21.92,0%,109.6,Debit Card ,66.0,4.0
+ORD-1090,2024-07-28,Amit Kapoor,customer90@example.com,north,Electronics,Monitor,1,212.24,0%,212.24,PayPal,61.0,3.0
+ORD-1479,2023-01-25,Neha Verma,customer479@example.com,South,Furniture,Chair,5,147.14,20%,588.56,CREDIT CARD,35.0,5.0
+ORD-1333,2024-05-20,Pooja Singh,customer333@example.com,South,Clothing,Sneakers,5,60.3,0%,301.5,UPI,49.0,3.0
+ORD-1424,2023-09-28,Pooja Joshi,customer424@example.com,South,Office Supplies,Pen Set,4,20.05,15%,68.17,Credit Card,,5.0
+ORD-1153,2023-09-27,Rohan Joshi,customer153@example.com,East,Office Supplies,Printer Paper,4,19.78,10%,71.21,UPI,37.0,4.0
+ORD-1101,2023-02-27,Karan Joshi,customer101@example.com,East,Office Supplies,Pen Set,2,16.39,0%,32.78,UPI,28.0,4.0
+ORD-1418,2024-06-14,Vikram Kapoor,customer418@example.com,West,Electronics,Keyboard,8,357.46,10%,2573.71,Credit Card,66.0,5.0
+ORD-1350,2023-02-13,Rahul Reddy,customer350@example.com,South,Office Supplies,Notebook,2,14.09,0%,28.18,UPI,25.0,5.0
+ORD-1005,2023-03-09,Vikram Patel,customer5@example.com,West,Clothing,Sneakers,2,41.85,15%,71.14,PayPal,46.0,4.0
+ORD-1044,2024-05-29,Karan Kapoor,customer44@example.com,SOUTH,Clothing,Sneakers,8,35.9,0%,287.2,Credit Card,19.0,3.0
+ORD-1113,2024-07-11,Amit Reddy,customer113@example.com,North,Office Supplies,Pen Set,6,20.84,15%,106.28,UPI,18.0,5.0
+ORD-1220,2023-11-09,Rahul Gupta,customer220@example.com,North,Furniture,Chair,6,170.38,0%,1022.28,Debit Card,,4.0
+ORD-1140,2023-04-24,Rohan Joshi,customer140@example.com,South,Office Supplies,Printer Paper,3,18.07,15%,46.08,Cash,33.0,
+ORD-1210,2024-07-11,Kavya Verma,customer210@example.com,West,Office Supplies,Stapler,294,20.44,15%,5107.96,upi,,
+ORD-1133,2023-05-25,Sneha Gupta,customer133@example.com,West,Furniture,Bookshelf,6,196.12,5%,1117.88,Debit Card,35.0,
+ORD-1261,2024-07-05,Rohan Iyer,customer261@example.com,East,Clothing,Sneakers,4,52.99,5%,201.36,,56.0,3.0
+ORD-1278,2024-03-22,Anjali Mehta,customer278@example.com,South,Clothing,T-Shirt,4,57.16,10%,205.78,Cash,,5.0
+ORD-1079,2024-11-23,Amit Verma,customer79@example.com,WEST,Office Supplies,Printer Paper,6,17.04,0%,102.24,PayPal,45.0,4.0
+ORD-1499,2023-12-04,Sneha Gupta,customer499@example.com,West,Office Supplies,Printer Paper,6,25.16,0%,150.96,,36.0,5.0
+ORD-1115,2023-12-29,Rahul Reddy,customer115@example.com,South,Clothing,Jacket,7,62.12,,434.84,PayPal,55.0,1.0
+ORD-1358,2023-10-05,Rohan Sharma,customer358@example.com,South,Office Supplies,Notebook,7,25.98,0%,181.86,Cash,,
+ORD-1374,2024-09-12,Sneha Singh,customer374@example.com,east,Electronics,Keyboard,4,286.23,10%,1030.43,UPI,60.0,1.0
+ORD-1206,2023-03-23,Karan Desai,customer206@example.com,North,Electronics,Monitor,7,349.92,10%,2204.5,PayPal,45.0,3.0
+ORD-1184,2023-12-10,Rohan Patel,customer184@example.com,South,Office Supplies,Pen Set,289,23.27,10%,6052.53,PayPal,56.0,5.0
+ORD-1346,2024-11-03,Kavya Joshi,customer346@example.com,South,Clothing,Sneakers,8,41.57,20%,266.05,Credit Card,68.0,5.0
+ORD-1481,2024-05-13,Priya Gupta,customer481@example.com,West,Electronics,Laptop,1,315.44,0%,315.44,UPI,30.0,
+ORD-1379,2024-04-24,Rohan Patel,customer379@example.com,North,Office Supplies,Stapler,9,25.9,15%,198.14,,33.0,4.0
+ORD-1242,2023-11-15,Priya Sharma,customer242@example.com,South,Electronics,Keyboard,5,352.85,0%,1764.25,UPI ,19.0,3.0
+ORD-1411,2024-08-27,Amit Patel,customer411@example.com,east,Office Supplies,Stapler,1,21.83,5%,20.74,Cash,58.0,5.0
+ORD-1009,2023-04-03,Vikram Patel,customer9@example.com,South,Office Supplies,Stapler,2,19.53,0%,39.06,Cash,28.0,5.0
+ORD-1340,2024-10-13,Sneha Joshi,customer340@example.com,North,Electronics,Monitor,4,253.24,10%,911.66,Credit Card,,4.0
+ORD-1328,2024-11-08,Neha Sharma,customer328@example.com,South,Office Supplies,Stapler,6,21.59,5%,123.06,Cash,44.0,3.0
+ORD-1045,2024-05-28,Kavya Sharma,customer45@example.com,East,Clothing,T-Shirt,4,45.39,0%,181.56,Credit Card,50.0,4.0
+ORD-1367,2023-12-18,Sneha Reddy,customer367@example.com,South ,Office Supplies,Pen Set,2,23.49,0%,46.98,Cash,,5.0
+ORD-1431,2023-04-15,Priya Verma,customer431@example.com,North,Office Supplies,Notebook,7,15.43,0%,108.01,PAYPAL,46.0,4.0
+ORD-1022,2023-11-22,Karan Sharma,customer22@example.com,NORTH,Clothing,Sneakers,2,52.71,0%,105.42,PayPal,37.0,3.0
+ORD-1036,2024-07-01,Anjali Singh,customer36@example.com,East,Electronics,Keyboard,3,356.37,0%,1069.11,PayPal,60.0,5.0
+ORD-1048,2024-05-19,Amit Sharma,customer48@example.com,North,Office Supplies,Stapler,5,22.7,5%,107.82,Debit Card,35.0,5.0
+ORD-1298,2024-01-29,Amit Patel,customer298@example.com,North,Office Supplies,Stapler,7,24.33,5%,161.79,debit card,32.0,5.0
+ORD-1290,2024-01-20,Aarav Joshi,customer290@example.com,South,Clothing,T-Shirt,9,37.75,10%,305.78,UPI,,4.0
+ORD-1313,2024-01-21,Kavya Desai,customer313@example.com,East,Furniture,Bookshelf,9,215.06,5%,1838.76,Credit Card,27.0,1.0
+ORD-1145,2023-04-12,Rohan Mehta,customer145@example.com,North,Furniture,Chair,1,245.72,20%,196.58,Cash,47.0,5.0
+ORD-1122,2023-01-20,Karan Nair,customer122@example.com,North,Electronics,Headphones,1,386.26,15%,328.32,Debit Card,44.0,4.0
+ORD-1378,2023-09-10,Rahul Patel,customer378@example.com,North,Furniture,Chair,8,218.32,0%,1746.56,Cash,44.0,5.0
+ORD-1336,2023-07-11,Neha Sharma,customer336@example.com,South ,Electronics,Monitor,9,347.64,10%,2815.88,PayPal,39.0,4.0
+ORD-1381,2024-06-09,Karan Nair,customer381@example.com,West,Clothing,T-Shirt,3,50.49,0%,151.47,Debit Card,21.0,
+ORD-1386,2024-08-05,Vikram Singh,customer386@example.com,North,Office Supplies,Stapler,9,19.53,0%,175.77,,66.0,4.0
+ORD-1315,2023-02-19,Aarav Joshi,customer315@example.com,South,Furniture,Desk,1,257.14,10%,231.43,Debit Card,62.0,4.0
+ORD-1197,2023-04-20,Vikram Singh,customer197@example.com,north,Clothing,Sneakers,4,60.54,0%,242.16,Debit Card,53.0,2.0
+ORD-1257,2023-02-22,Aarav Iyer,customer257@example.com,West,Electronics,Monitor,6,267.45,,1283.76,UPI,19.0,2.0
+ORD-1139,2024-02-28,Aarav Desai,customer139@example.com,North,Electronics,Monitor,8,333.22,20%,2132.61,Cash,54.0,2.0
+ORD-1484,2023-12-30,Aarav Joshi,customer484@example.com,west,Electronics,Headphones,7,248.54,0%,1739.78,Credit Card,,
+ORD-1432,2023-10-02,Kavya Singh,customer432@example.com,South,Office Supplies,Notebook,2,15.03,5%,28.56,Cash,64.0,5.0
+ORD-1107,2023-09-15,Karan Verma,customer107@example.com,North ,Furniture,Bookshelf,3,245.4,0%,736.2,PayPal,59.0,4.0
+ORD-1008,2023-01-23,Kavya Singh,customer8@example.com,North,Electronics,Monitor,4,218.74,20%,699.97,,25.0,4.0
+ORD-1423,2024-06-12,Kavya Kapoor,customer423@example.com,North,Electronics,Monitor,5,345.42,10%,1554.39,paypal,34.0,5.0
+ORD-1494,2023-02-10,Vikram Verma,customer494@example.com,South,Office Supplies,Pen Set,7,18.29,10%,115.23,Credit Card,45.0,2.0
+ORD-1348,2023-05-20,Aarav Joshi,customer348@example.com,East,Office Supplies,Stapler,3,24.33,0%,72.99,,61.0,4.0
+ORD-1479,2023-01-25,Neha Verma,customer479@example.com,South,Furniture,Chair,5,147.14,20%,588.56,CREDIT CARD,35.0,5.0
+ORD-1191,2023-12-23,Aarav Mehta,customer191@example.com,West,Electronics,Headphones,6,362.37,20%,1739.38,Credit Card,29.0,5.0
+ORD-1234,2024-02-24,Anjali Verma,customer234@example.com,South,Clothing,Jacket,5,39.59,20%,158.36,,38.0,1.0
+ORD-1021,2024-03-23,Karan Kapoor,customer21@example.com,North,Furniture,Desk,1,208.31,0%,208.31,PayPal,33.0,5.0
+ORD-1489,2023-02-08,Neha Verma,customer489@example.com,South ,Office Supplies,Stapler,4,15.62,15%,53.11,,,3.0
+ORD-1272,2023-10-17,Rohan Mehta,customer272@example.com,North,Electronics,Keyboard,2,388.53,10%,699.35,Debit Card,34.0,
+ORD-1444,2023-06-14,Rohan Mehta,customer444@example.com,East,Furniture,Desk,8,244.74,20%,1566.34,cash,35.0,5.0
+ORD-1168,2023-01-02,Aarav Mehta,customer168@example.com,south,Furniture,Bookshelf,1,176.54,5%,167.71,UPI,47.0,
+ORD-1384,2023-07-28,Rahul Patel,customer384@example.com,West,Furniture,Chair,4,257.2,0%,1028.8,PayPal,24.0,3.0
+ORD-1078,2024-12-22,Priya Mehta,customer78@example.com,West,Office Supplies,Pen Set,9,24.49,5%,209.39,UPI ,46.0,3.0
+ORD-1329,2024-06-13,Rohan Verma,customer329@example.com,South,Furniture,Chair,2,180.09,10%,324.16,PayPal,20.0,
+ORD-1046,2023-08-14,Rohan Gupta,customer46@example.com,North,Furniture,Desk,8,142.28,10%,1024.42,Cash,44.0,4.0
+ORD-1364,2024-05-19,Amit Singh,customer364@example.com,South,Office Supplies,Stapler,1,25.77,20%,20.62,cash,23.0,3.0
+ORD-1438,2023-10-06,Neha Iyer,customer438@example.com,West,Office Supplies,Pen Set,9,15.65,20%,112.68,UPI,,2.0
+ORD-1434,2023-04-28,Rahul Joshi,customer434@example.com,South,Electronics,Headphones,8,241.56,0%,1932.48,UPI,31.0,4.0
+ORD-1415,2024-03-07,Sneha Kapoor,customer415@example.com,NORTH,Electronics,Keyboard,4,364.94,0%,1459.76,PayPal ,64.0,4.0
+ORD-1473,2023-06-04,Rohan Sharma,customer473@example.com,East,Electronics,Laptop,9,326.33,15%,2496.42,PayPal,27.0,2.0
+ORD-1219,2023-12-04,Amit Sharma,customer219@example.com,South,Furniture,Chair,2,164.93,0%,329.86,Cash,,2.0
+ORD-1467,2024-10-07,Rohan Kapoor,customer467@example.com,West,Clothing,Jacket,3,51.92,5%,147.97,Credit Card ,42.0,4.0
+ORD-1338,2023-02-13,Rahul Mehta,customer338@example.com,South,Electronics,Keyboard,2,296.51,,533.72,Credit Card,60.0,5.0
+ORD-1249,2024-07-10,Anjali Nair,customer249@example.com,North,Furniture,Bookshelf,9,173.71,20%,1250.71,Credit Card,36.0,3.0
+ORD-1135,2024-02-23,Vikram Kapoor,customer135@example.com,East ,Electronics,Laptop,1,277.9,0%,277.9,Cash,65.0,3.0
+ORD-1201,2023-02-07,Sneha Singh,customer201@example.com,East,Clothing,Jacket,8,42.45,10%,305.64,Debit Card,45.0,4.0
+ORD-1471,2024-02-08,Rahul Patel,customer471@example.com,West,Office Supplies,Stapler,1,16.55,15%,14.07,Debit Card,52.0,5.0
+ORD-1110,2023-07-20,Amit Desai,customer110@example.com,SOUTH,Office Supplies,Stapler,9,22.9,0%,206.1,Cash,22.0,3.0
+ORD-1322,2024-07-02,Rohan Verma,customer322@example.com,North,Furniture,Chair,2,193.27,20%,309.23,cash,44.0,
+ORD-1063,2024-03-21,Vikram Reddy,customer63@example.com,West,Office Supplies,Stapler,4,21.02,5%,79.88,PayPal,65.0,5.0
+ORD-1292,2024-06-28,Anjali Nair,customer292@example.com,West,Clothing,Jacket,7,54.67,10%,344.42,PAYPAL,49.0,4.0
+ORD-1092,2024-02-13,Rahul Verma,customer92@example.com,east,Furniture,Bookshelf,5,202.43,0%,1012.15,UPI,34.0,4.0
+ORD-1245,2023-01-07,Amit Iyer,customer245@example.com,North,Clothing,Sneakers,4,48.14,0%,192.56,UPI,33.0,4.0
+ORD-1062,2024-03-04,Anjali Verma,customer62@example.com,east,Office Supplies,Notebook,7,25.92,5%,172.37,UPI,,1.0
+ORD-1000,2024-01-29,Rahul Joshi,customer0@example.com,West,Office Supplies,Printer Paper,7,17.12,10%,107.86,Cash,29.0,3.0
+ORD-1027,2024-09-26,Sneha Sharma,customer27@example.com,North,Electronics,Headphones,9,239.29,10%,1938.25,UPI,39.0,3.0
+ORD-1487,2023-07-22,Amit Desai,customer487@example.com,South,Electronics,Laptop,8,286.09,0%,2288.72,UPI,18.0,3.0
+ORD-1250,2023-05-10,Pooja Desai,customer250@example.com,East,Office Supplies,Notebook,3,14.74,20%,35.38,UPI,66.0,3.0
+ORD-1356,2024-05-05,Neha Reddy,customer356@example.com,East,Office Supplies,Pen Set,6,15.39,15%,78.49,Debit Card,60.0,5.0
+ORD-1177,2023-01-18,Rohan Gupta,customer177@example.com,North,Clothing,T-Shirt,8,60.56,5%,460.26,UPI,47.0,4.0
+ORD-1187,2023-11-08,Kavya Mehta,customer187@example.com,North,Electronics,Monitor,6,231.72,0%,1390.32,PayPal,33.0,5.0
+ORD-1148,2023-03-11,Pooja Singh,customer148@example.com,South ,Furniture,Bookshelf,9,162.29,15%,1241.52,PayPal,53.0,5.0
+ORD-1239,2024-09-10,Kavya Singh,customer239@example.com,west,Electronics,Laptop,4,353.0,5%,1341.4,Credit Card,35.0,5.0
+ORD-1468,2024-04-18,Neha Iyer,customer468@example.com,South,Electronics,Keyboard,7,331.8,20%,1858.08,Credit Card,37.0,3.0
+ORD-1465,2024-11-05,Rohan Nair,customer465@example.com,West,Office Supplies,Notebook,6,20.26,,121.56,,61.0,4.0
+ORD-1443,2023-03-19,Pooja Reddy,customer443@example.com,WEST,Electronics,Headphones,2,385.61,10%,694.1,UPI ,23.0,5.0
+ORD-1158,2023-08-26,Vikram Joshi,customer158@example.com,East,Office Supplies,Pen Set,7,17.03,0%,119.21,UPI,36.0,4.0
+ORD-1143,2024-08-26,Aarav Joshi,customer143@example.com,North,Office Supplies,Printer Paper,5,15.19,0%,75.95,UPI,38.0,4.0
+ORD-1273,2023-05-19,Sneha Singh,customer273@example.com,North,Office Supplies,Stapler,7,20.38,0%,142.66,Debit Card,21.0,2.0
+ORD-1059,2024-12-10,Vikram Sharma,customer59@example.com,North,Electronics,Headphones,6,388.52,5%,2214.56,PayPal,68.0,5.0
+ORD-1202,2023-08-01,Pooja Patel,customer202@example.com,South,Office Supplies,Printer Paper,2,16.94,0%,33.88,UPI,26.0,3.0
+ORD-1119,2023-01-24,Kavya Sharma,customer119@example.com,South,Office Supplies,Pen Set,9,16.45,0%,148.05,Cash ,68.0,5.0
+ORD-1208,2024-11-01,Anjali Reddy,customer208@example.com,South,Electronics,Headphones,7,298.31,10%,1879.35,UPI,27.0,2.0
+ORD-1445,2023-09-04,Rahul Patel,customer445@example.com,WEST,Office Supplies,Notebook,1,16.31,20%,13.05,upi,48.0,3.0
+ORD-1149,2024-05-18,Sneha Iyer,customer149@example.com,West,Electronics,Keyboard,3,303.96,0%,911.88,,42.0,4.0
+ORD-1123,2023-10-22,Rahul Reddy,customer123@example.com,East,Furniture,Desk,9,185.26,10%,1500.61,Debit Card,55.0,5.0
+ORD-1311,2023-06-22,Neha Sharma,customer311@example.com,East ,Furniture,Chair,3,213.21,20%,511.7,Debit Card,20.0,
+ORD-1016,2024-08-31,Aarav Iyer,customer16@example.com,West,Office Supplies,Pen Set,7,16.26,0%,113.82,PAYPAL,32.0,2.0
+ORD-1224,2024-07-13,Neha Joshi,customer224@example.com,North,Furniture,Chair,8,178.58,0%,1428.64,Credit Card,32.0,2.0
+ORD-1469,2024-01-17,Rohan Nair,customer469@example.com,South,Office Supplies,Notebook,6,14.79,10%,79.87,Cash,46.0,5.0
+ORD-1229,2023-04-20,Kavya Patel,customer229@example.com,West,Electronics,Headphones,5,243.7,5%,1157.58,upi,32.0,5.0
+ORD-1308,2023-09-12,Priya Desai,customer308@example.com,South,Furniture,Chair,8,205.05,5%,1558.38,Debit Card,38.0,3.0
+ORD-1289,2023-06-30,Vikram Desai,customer289@example.com,west,Electronics,Monitor,8,232.65,5%,1768.14,Credit Card,56.0,5.0
+ORD-1456,2024-11-05,Amit Gupta,customer456@example.com,South,Clothing,Sneakers,1,53.05,0%,53.05,cash,25.0,2.0
+ORD-1343,2024-03-03,Karan Verma,customer343@example.com,South,Office Supplies,Stapler,5,17.09,5%,81.18,UPI,18.0,5.0
+ORD-1402,2023-08-30,Priya Kapoor,customer402@example.com,NORTH,Office Supplies,Pen Set,8,15.15,0%,121.2,PayPal,23.0,4.0
+ORD-1097,2024-10-17,Pooja Nair,customer97@example.com,North,Electronics,Keyboard,7,332.86,20%,1864.02,upi,33.0,5.0
+ORD-1125,2023-02-28,Rohan Joshi,customer125@example.com,West,Office Supplies,Printer Paper,6,24.65,20%,118.32,UPI,26.0,5.0
+ORD-1061,2024-05-31,Neha Verma,customer61@example.com,West,Office Supplies,Stapler,4,14.2,5%,53.96,UPI,30.0,4.0
+ORD-1081,2024-07-06,Pooja Nair,customer81@example.com,West,Furniture,Bookshelf,5,206.42,0%,1032.1,UPI,59.0,4.0
+ORD-1146,2024-06-21,Vikram Reddy,customer146@example.com,North,Furniture,Chair,6,173.37,5%,988.21,DEBIT CARD,28.0,5.0
+ORD-1324,2024-09-03,Vikram Nair,customer324@example.com,South,Clothing,Sneakers,6,60.62,0%,363.72,Credit Card,39.0,5.0
+ORD-1385,2024-07-30,Vikram Desai,customer385@example.com,North,Clothing,T-Shirt,2,44.55,0%,89.1,Cash,38.0,1.0
+ORD-1056,2023-07-20,Rahul Patel,customer56@example.com,North,Office Supplies,Pen Set,8,22.32,5%,169.63,Debit Card,67.0,3.0
+ORD-1019,2024-04-04,Karan Nair,customer19@example.com,east,Office Supplies,Notebook,9,21.44,0%,192.96,UPI,53.0,2.0
+ORD-1086,2024-09-28,Vikram Mehta,customer86@example.com,South,Office Supplies,Printer Paper,4,23.1,10%,83.16,Debit Card,18.0,5.0
+ORD-1326,2023-04-22,Anjali Gupta,customer326@example.com,West,Clothing,Sneakers,4,51.34,0%,205.36,PayPal,31.0,4.0
+ORD-1246,2023-03-24,Karan Kapoor,customer246@example.com,South ,Office Supplies,Printer Paper,3,21.67,5%,61.76,,57.0,3.0
+ORD-1137,2023-12-30,Aarav Nair,customer137@example.com,West ,Office Supplies,Pen Set,7,15.57,0%,108.99,Credit Card,29.0,2.0
+ORD-1316,2024-09-13,Rohan Singh,customer316@example.com,west,Furniture,Bookshelf,7,187.96,0%,1315.72,Credit Card ,64.0,4.0
+ORD-1034,2023-04-24,Amit Mehta,customer34@example.com,West,Office Supplies,Notebook,8,25.82,0%,206.56,Debit Card ,38.0,4.0
+ORD-1296,2024-01-25,Karan Kapoor,customer296@example.com,North,Clothing,T-Shirt,205,40.93,10%,7551.58,UPI,23.0,5.0
+ORD-1138,2024-08-30,Rohan Iyer,customer138@example.com,North,Office Supplies,Stapler,2,15.95,10%,28.71,Credit Card,,
+ORD-1254,2023-09-02,Neha Desai,customer254@example.com,North,Electronics,Monitor,9,323.81,0%,2914.29,Debit Card,45.0,
+ORD-1076,2024-11-28,Rohan Patel,customer76@example.com,south,Furniture,Bookshelf,3,211.49,20%,507.58,debit card,41.0,1.0
+ORD-1459,2024-12-01,Sneha Joshi,customer459@example.com,South,Office Supplies,Stapler,5,19.02,5%,90.34,DEBIT CARD,66.0,3.0
+ORD-1026,2024-01-19,Priya Mehta,customer26@example.com,North,Office Supplies,Notebook,5,21.43,5%,101.79,Cash,23.0,2.0
+ORD-1288,2023-05-29,Pooja Verma,customer288@example.com,North,Office Supplies,Notebook,1,19.28,0%,19.28,PayPal,58.0,5.0
+ORD-1043,2023-09-05,Sneha Gupta,customer43@example.com,east,Furniture,Chair,4,149.37,0%,597.48,UPI,,1.0
+ORD-1096,2024-04-07,Pooja Singh,customer96@example.com,East,Furniture,Bookshelf,5,187.4,0%,937.0,UPI,68.0,4.0
+ORD-1083,2023-12-11,Pooja Gupta,customer83@example.com,South,Electronics,Monitor,6,331.97,20%,1593.46,Debit Card,22.0,5.0
+ORD-1446,2023-01-28,Karan Sharma,customer446@example.com,West,Clothing,Sneakers,6,41.62,20%,199.78,PayPal,52.0,2.0
+ORD-1252,2023-07-16,Neha Gupta,customer252@example.com,SOUTH,Office Supplies,Notebook,266,15.55,0%,4136.3,Credit Card,44.0,1.0
+ORD-1366,2023-09-04,Priya Mehta,customer366@example.com,West,Office Supplies,Pen Set,3,15.66,10%,42.28,Debit Card,47.0,
+ORD-1361,2023-04-28,Aarav Sharma,customer361@example.com,West,Electronics,Laptop,9,286.1,0%,2574.9,,26.0,5.0
+ORD-1185,2024-02-05,Pooja Verma,customer185@example.com,South,Office Supplies,Pen Set,5,16.48,10%,74.16,Debit Card,35.0,
+ORD-1073,2023-02-01,Vikram Sharma,customer73@example.com,East,Electronics,Monitor,4,329.45,5%,1251.91,PayPal,56.0,3.0
+ORD-1373,2023-10-23,Anjali Reddy,customer373@example.com,North,Furniture,Chair,2,161.16,5%,306.2,Credit Card,27.0,4.0
+ORD-1248,2023-08-04,Karan Reddy,customer248@example.com,North,Furniture,Desk,4,259.2,20%,829.44,Debit Card,69.0,4.0
+ORD-1406,2023-05-14,Sneha Iyer,customer406@example.com,East,Furniture,Chair,6,146.34,0%,878.04,PayPal,41.0,4.0
+ORD-1401,2024-05-10,Karan Reddy,customer401@example.com,South,Clothing,T-Shirt,8,61.37,0%,490.96,CASH,55.0,5.0
+ORD-1247,2023-02-04,Karan Kapoor,customer247@example.com,South,Furniture,Chair,8,140.28,,1122.24,UPI,49.0,3.0
+ORD-1392,2024-07-21,Anjali Desai,customer392@example.com,WEST,Office Supplies,Printer Paper,4,23.99,0%,95.96,Debit Card,34.0,4.0
+ORD-1233,2024-03-15,Amit Mehta,customer233@example.com,North,Office Supplies,Stapler,2,19.63,0%,39.26,Cash,39.0,3.0
+ORD-1271,2023-07-08,Priya Nair,customer271@example.com,North,Electronics,Laptop,1,344.93,0%,344.93,debit card,57.0,4.0
+ORD-1434,2023-04-28,Rahul Joshi,customer434@example.com,South,Electronics,Headphones,8,241.56,0%,1932.48,UPI,31.0,4.0
+ORD-1136,2023-11-03,Kavya Verma,customer136@example.com,East,Clothing,Sneakers,4,46.82,,177.92,Credit Card,68.0,4.0
+ORD-1430,2024-07-25,Amit Singh,customer430@example.com,North,Clothing,Jacket,2,57.54,0%,115.08,PayPal,27.0,5.0
+ORD-1295,2023-08-29,Neha Gupta,customer295@example.com,North,Clothing,Jacket,9,44.8,10%,362.88,PayPal,36.0,3.0
+ORD-1049,2023-03-10,Pooja Nair,customer49@example.com,South,Electronics,Laptop,2,337.46,10%,607.43,Cash,62.0,4.0
+ORD-1207,2024-04-30,Vikram Sharma,customer207@example.com,North,Office Supplies,Stapler,3,20.21,0%,60.63,cash,58.0,4.0
+ORD-1031,2024-02-11,Karan Mehta,customer31@example.com,east,Clothing,T-Shirt,8,62.56,15%,425.41,Credit Card,35.0,1.0
+ORD-1485,2024-08-28,Pooja Nair,customer485@example.com,East,Furniture,Bookshelf,6,151.9,5%,865.83,Cash,69.0,5.0
+ORD-1132,2023-03-31,Sneha Iyer,customer132@example.com,North,Office Supplies,Printer Paper,9,25.22,0%,226.98,UPI,38.0,4.0
+ORD-1050,2023-12-28,Neha Kapoor,customer50@example.com,South,Electronics,Monitor,6,342.94,15%,1748.99,Cash,39.0,
+ORD-1460,2023-05-17,Rohan Nair,customer460@example.com,South,Office Supplies,Printer Paper,9,23.09,5%,197.42,UPI,,1.0
+ORD-1238,2024-12-07,Kavya Sharma,customer238@example.com,South,Electronics,Headphones,5,271.63,5%,1290.24,Debit Card,35.0,3.0
+ORD-1052,2024-06-03,Rohan Reddy,customer52@example.com,West,Office Supplies,Stapler,2,24.68,10%,44.42,Cash,23.0,2.0
+ORD-1080,2023-08-17,Neha Iyer,customer80@example.com,WEST,Office Supplies,Printer Paper,4,21.33,0%,85.32,Cash,,4.0
+ORD-1450,2024-09-02,Neha Desai,customer450@example.com,East,Electronics,Headphones,1,311.96,10%,280.76,Debit Card,67.0,4.0
+ORD-1031,2024-02-11,Karan Mehta,customer31@example.com,east,Clothing,T-Shirt,8,62.56,15%,425.41,Credit Card,35.0,1.0
+ORD-1121,2023-02-18,Pooja Iyer,customer121@example.com,North,Office Supplies,Notebook,4,14.28,5%,54.26,Credit Card,63.0,5.0
+ORD-1211,2023-07-12,Sneha Mehta,customer211@example.com,East,Office Supplies,Printer Paper,1,19.21,0%,19.21,Debit Card,36.0,4.0
+ORD-1351,2024-03-04,Rohan Gupta,customer351@example.com,South,Electronics,Headphones,4,270.5,5%,1027.9,Debit Card,66.0,5.0
+ORD-1454,2024-02-23,Kavya Reddy,customer454@example.com,East ,Electronics,Monitor,3,214.78,0%,644.34,PayPal,63.0,3.0
+ORD-1302,2023-12-31,Anjali Sharma,customer302@example.com,East,Office Supplies,Stapler,9,17.3,5%,147.92,UPI ,20.0,4.0
+ORD-1196,2023-10-20,Sneha Singh,customer196@example.com,North,Office Supplies,Stapler,2,22.52,20%,36.03,Debit Card,55.0,
+ORD-1088,2023-03-09,Karan Desai,customer88@example.com,North,Electronics,Monitor,9,285.47,0%,2569.23,Credit Card,41.0,3.0
+ORD-1325,2023-03-12,Kavya Nair,customer325@example.com,South,Office Supplies,Notebook,8,17.87,0%,142.96,,42.0,4.0
+ORD-1323,2024-07-12,Pooja Kapoor,customer323@example.com,South,Office Supplies,Printer Paper,9,25.23,5%,215.72,Debit Card,20.0,
+ORD-1255,2024-06-30,Karan Joshi,customer255@example.com,North,Office Supplies,Notebook,8,18.72,0%,149.76,PayPal,66.0,3.0
+ORD-1380,2024-03-29,Amit Desai,customer380@example.com,east,Office Supplies,Printer Paper,1,25.99,5%,24.69,Credit Card,31.0,4.0
+ORD-1058,2023-05-22,Aarav Desai,customer58@example.com,South,Electronics,Headphones,1,301.31,0%,301.31,Debit Card,19.0,5.0
+ORD-1033,2023-06-07,Priya Reddy,customer33@example.com,East,Furniture,Desk,2,212.41,0%,424.82,Credit Card,34.0,4.0
+ORD-1490,2024-03-13,Neha Nair,customer490@example.com,South,Office Supplies,Pen Set,5,24.32,5%,115.52,upi,48.0,2.0
+ORD-1038,2023-12-23,Kavya Gupta,customer38@example.com,North,Electronics,Headphones,5,353.86,10%,1592.37,UPI,37.0,3.0
+ORD-1359,2024-12-29,Pooja Nair,customer359@example.com,West,Office Supplies,Pen Set,5,16.31,5%,77.47,Credit Card,34.0,
+ORD-1051,2024-10-10,Priya Kapoor,customer51@example.com,North,Electronics,Headphones,3,267.09,20%,641.02,Debit Card,56.0,4.0
+ORD-1363,2023-05-28,Kavya Patel,customer363@example.com,SOUTH,Electronics,Laptop,6,377.92,20%,1814.02,,,
+ORD-1426,2023-07-13,Rahul Patel,customer426@example.com,South,Electronics,Monitor,6,293.64,0%,1761.84,Cash,41.0,2.0
+ORD-1260,2023-09-08,Sneha Verma,customer260@example.com,South,Electronics,Headphones,2,328.79,15%,558.94,Cash,57.0,3.0
+ORD-1102,2023-10-14,Sneha Verma,customer102@example.com,East,Furniture,Bookshelf,8,243.08,10%,1750.18,Credit Card,20.0,3.0
+ORD-1195,2024-12-23,Karan Iyer,customer195@example.com,North ,Electronics,Monitor,4,254.15,5%,965.77,Credit Card,39.0,5.0
+ORD-1167,2024-06-12,Rahul Kapoor,customer167@example.com,North,Clothing,Jacket,9,39.13,10%,316.95,Credit Card,20.0,2.0
+ORD-1293,2023-08-06,Neha Patel,customer293@example.com,East,Electronics,Laptop,5,329.32,0%,1646.6,UPI,45.0,
+ORD-1116,2024-03-25,Vikram Mehta,customer116@example.com,North ,Office Supplies,Printer Paper,9,24.39,10%,197.56,Debit Card,44.0,5.0
+ORD-1124,2024-06-28,Rohan Joshi,customer124@example.com,East,Electronics,Keyboard,9,339.48,10%,2749.79,PayPal,62.0,
+ORD-1404,2023-10-19,Sneha Patel,customer404@example.com,North,Clothing,T-Shirt,255,51.02,5%,12359.6,UPI,69.0,3.0
+ORD-1218,2023-07-13,Karan Iyer,customer218@example.com,South,Clothing,Sneakers,6,51.63,15%,263.31,UPI,20.0,4.0
+ORD-1287,2024-08-11,Karan Kapoor,customer287@example.com,South,Furniture,Desk,1,188.98,5%,179.53,Debit Card ,52.0,4.0
+ORD-1319,2023-04-01,Priya Singh,customer319@example.com,West,Clothing,Jacket,7,47.0,20%,263.2,Debit Card ,57.0,4.0
+ORD-1047,2023-05-30,Sneha Joshi,customer47@example.com,North,Furniture,Chair,6,159.86,20%,767.33,Cash,57.0,
+ORD-1213,2023-11-02,Anjali Singh,customer213@example.com,North,Clothing,Sneakers,5,38.77,10%,174.47,Credit Card,21.0,2.0
+ORD-1189,2024-08-03,Amit Kapoor,customer189@example.com,East,Furniture,Desk,9,152.05,20%,1094.76,Credit Card,,4.0
+ORD-1095,2024-03-12,Anjali Nair,customer95@example.com,South,Office Supplies,Notebook,2,24.68,0%,49.36,Cash,25.0,5.0
+ORD-1433,2023-05-21,Neha Gupta,customer433@example.com,West,Clothing,Jacket,4,40.29,5%,153.1,Debit Card,62.0,
+ORD-1263,2023-09-20,Rohan Verma,customer263@example.com,East,Electronics,Keyboard,1,381.01,10%,342.91,PayPal,42.0,5.0
+ORD-1360,2023-12-30,Amit Joshi,customer360@example.com,North,Clothing,T-Shirt,2,39.62,,67.35,Debit Card,31.0,5.0
+ORD-1075,2023-01-04,Amit Mehta,customer75@example.com,north,Furniture,Desk,3,142.18,10%,383.89,credit card,37.0,4.0
+ORD-1466,2024-11-11,Rahul Kapoor,customer466@example.com,West,Office Supplies,Stapler,3,17.78,0%,53.34,credit card,21.0,3.0
+ORD-1299,2024-05-12,Aarav Sharma,customer299@example.com,West,Office Supplies,Notebook,4,16.96,5%,64.45,Debit Card ,68.0,5.0
+ORD-1493,2024-11-15,Aarav Patel,customer493@example.com,East,Furniture,Desk,8,146.63,20%,938.43,Debit Card,33.0,5.0
+ORD-1168,2023-01-02,Aarav Mehta,customer168@example.com,south,Furniture,Bookshelf,1,176.54,5%,167.71,UPI,47.0,
