@@ -9,10 +9,16 @@ from pandas.api import types as ptypes
 import plotly.express as px
 import streamlit as st
 
+
 from modules.data_transformation import (CALC_OPERATORS, DATE_PARTS, DTYPE_TARGETS,
                                          add_calculated_column, change_dtype, drop_columns,
                                          extract_date_parts, filter_rows, rename_columns,
                                          to_csv_bytes, to_excel_bytes)
+
+from modules.dashboard import (AGG_LABELS, CHART_KINDS, apply_filters, auto_frequency,
+                               build_chart, build_kpis, get_filter_options, identify_roles,
+                               recommend_charts)
+
 from modules.eda import (CORRELATION_METHODS, TREND_AGGREGATIONS, TREND_FREQUENCIES, EDAError,
                          categorical_columns, categorical_statistics, category_bar_figure,
                          category_counts, comparison_figure, correlation_heatmap,
@@ -1108,6 +1114,196 @@ def render_eda_page() -> None:
                     st.dataframe(table)
 
 # --------------------------------------------------------------------------
+# Page 7: Interactive Dashboard
+# --------------------------------------------------------------------------
+def bump_dashboard_reset() -> None:
+    """Changing this number gives every filter widget a new key, which resets them."""
+    st.session_state["dash_reset"] = st.session_state.get("dash_reset", 0) + 1
+
+
+def render_dashboard_filters(df: pd.DataFrame, roles: dict, sig: int) -> dict:
+    """Draw the filter panel and return the active filters (only the ones changed)."""
+    options = get_filter_options(df, roles)
+    suffix = f"{sig}_{st.session_state.get('dash_reset', 0)}"
+    filters = {"categories": {}, "numeric": {}, "dates": {}}
+    if not any(options.values()):
+        return filters
+
+    with st.expander("🎛️ Filters", expanded=True):
+        st.button("Clear all filters", on_click=bump_dashboard_reset, key="dash_clear")
+
+        if options["categories"]:
+            columns = st.columns(len(options["categories"]))
+            for widget, (name, values) in zip(columns, options["categories"].items()):
+                chosen = widget.multiselect(name, values, default=values,
+                                            key=f"dash_flt_cat_{name}_{suffix}")
+                if set(chosen) != set(values):          # only filter if the user changed it
+                    filters["categories"][name] = chosen
+
+        if options["numeric"]:
+            columns = st.columns(len(options["numeric"]))
+            for widget, (name, (low, high)) in zip(columns, options["numeric"].items()):
+                chosen = widget.slider(f"{name} range", low, high, (low, high),
+                                       key=f"dash_flt_num_{name}_{suffix}")
+                if tuple(chosen) != (low, high):
+                    filters["numeric"][name] = tuple(chosen)
+
+        for name, (first, last) in options["dates"].items():
+            picked = st.date_input(f"{name} range", value=(first, last),
+                                   min_value=first, max_value=last,
+                                   key=f"dash_flt_date_{name}_{suffix}")
+            # While the user is mid-selection Streamlit returns only one date: ignore that
+            if isinstance(picked, (tuple, list)) and len(picked) == 2 \
+                    and tuple(picked) != (first, last):
+                filters["dates"][name] = tuple(picked)
+
+        st.caption("Rows with a missing value in a filtered column are hidden while that "
+                   "filter is active.")
+    return filters
+
+
+def show_chart_grid(df: pd.DataFrame, specs: list, prefix: str) -> None:
+    """Draw charts two per row. One failing chart never breaks the others."""
+    for start in range(0, len(specs), 2):
+        columns = st.columns(2)
+        for widget, (offset, spec) in zip(columns, enumerate(specs[start:start + 2])):
+            with widget:
+                fig = eda_run(build_chart, df, spec)
+                if fig is not None:
+                    st.plotly_chart(fig, key=f"{prefix}_{start + offset}")
+
+
+def render_custom_chart(df: pd.DataFrame, roles: dict, sig: int) -> None:
+    """Let the user pick a chart type; the choices adapt to the column types."""
+    dims, measures, dates = roles["dimensions"], roles["measures"], roles["dates"]
+    available = []
+    if dims:
+        available += ["bar", "pie"]
+    if dates:
+        available.append("line")
+    if measures:
+        available.append("histogram")
+    if len(measures) >= 2:
+        available += ["scatter", "heatmap"]
+    if not available:
+        st.info("This dataset has no suitable columns for custom charts.")
+        return
+
+    kind = st.selectbox("Chart type", available, format_func=CHART_KINDS.get,
+                        key=f"dash_kind_{sig}")
+    agg_choices = list(AGG_LABELS) if measures else ["count"]
+    spec = {"kind": kind}
+
+    if kind in ("bar", "pie"):
+        spec["category"] = st.selectbox("Category", dims, key=f"dash_c_cat_{sig}")
+        choices = ([a for a in agg_choices if a in ("sum", "count")]
+                   if kind == "pie" else agg_choices)
+        spec["agg"] = st.selectbox("Show", choices, format_func=AGG_LABELS.get,
+                                   key=f"dash_c_agg_{kind}_{sig}")
+        if spec["agg"] != "count":
+            spec["measure"] = st.selectbox("Numeric column", measures,
+                                           key=f"dash_c_meas_{kind}_{sig}")
+        if kind == "bar":
+            spec["top_n"] = st.slider("Show the top N categories", 3, 20, 10,
+                                      key=f"dash_c_top_{sig}")
+
+    elif kind == "line":
+        spec["date"] = st.selectbox("Date column", dates, key=f"dash_c_date_{sig}")
+        steps = list(TREND_FREQUENCIES)
+        spec["freq"] = st.selectbox(
+            "Time step", steps, index=steps.index(auto_frequency(df[spec["date"]])),
+            format_func=TREND_FREQUENCIES.get, key=f"dash_c_freq_{sig}_{spec['date']}")
+        spec["agg"] = st.selectbox("Show", agg_choices, format_func=AGG_LABELS.get,
+                                   key=f"dash_c_lagg_{sig}")
+        if spec["agg"] != "count":
+            spec["measure"] = st.selectbox("Numeric column", measures,
+                                           key=f"dash_c_lmeas_{sig}")
+
+    elif kind == "histogram":
+        spec["measure"] = st.selectbox("Numeric column", measures, key=f"dash_c_hist_{sig}")
+        spec["bins"] = st.slider("Number of bins", 5, 100, 30, key=f"dash_c_bins_{sig}")
+
+    elif kind == "scatter":
+        a, b, c = st.columns(3)
+        spec["x"] = a.selectbox("X axis", measures, key=f"dash_c_x_{sig}")
+        spec["y"] = b.selectbox("Y axis", measures, index=1, key=f"dash_c_y_{sig}")
+        color = c.selectbox("Colour by (optional)", ["(none)"] + dims, key=f"dash_c_col_{sig}")
+        spec["color"] = None if color == "(none)" else color
+
+    else:  # heatmap
+        chosen = st.multiselect("Columns", measures, default=measures[:10],
+                                key=f"dash_c_hm_{sig}")
+        if len(chosen) < 2:
+            st.info("Select at least two columns.")
+            return
+        spec["columns"] = chosen
+
+    fig = eda_run(build_chart, df, spec)
+    if fig is not None:
+        st.plotly_chart(fig, key=f"dash_custom_chart_{sig}")
+
+
+def render_dashboard_page() -> None:
+    st.header("📈 Interactive Dashboard")
+    if not has_data():
+        st.info("Please upload a dataset first (Upload & Preview page).")
+        return
+
+    df = st.session_state["working_df"]
+    roles = identify_roles(df)
+    if not (roles["measures"] or roles["dimensions"] or roles["dates"]):
+        st.info("No chartable columns were found. If numbers or dates are stored as text, "
+                "convert them on the Data Cleaning page first.")
+        return
+    sig = data_signature(df)
+    st.caption("The dashboard is built automatically from your column types. It only reads "
+               "your data: filters never change it.")
+    if not roles["dates"]:
+        st.caption("💡 No date column detected. Convert text dates to 'Date / time' on the "
+                   "Data Cleaning page to unlock trend charts and the date filter.")
+
+    # ---- Filters -> filtered copy ----
+    filters = render_dashboard_filters(df, roles, sig)
+    filtered = eda_run(apply_filters, df, filters)
+    if filtered is None:
+        return
+    if filtered.empty:
+        st.warning("No rows match these filters. Widen them or click 'Clear all filters'.")
+        return
+    st.caption(f"Showing **{len(filtered):,}** of {len(df):,} rows")
+
+    # ---- KPI cards ----
+    kpis = build_kpis(filtered, roles)
+    for start in range(0, len(kpis), 4):
+        columns = st.columns(4)
+        for widget, item in zip(columns, kpis[start:start + 4]):
+            with widget:
+                kpi_card(item["label"], item["value"], item["sub"])
+    if any(item["label"] == "Latest month vs previous" for item in kpis):
+        st.caption("'Latest month vs previous' compares the last two calendar months in the "
+                   "filtered data. The latest month may be incomplete.")
+
+    # ---- Charts ----
+    tab_auto, tab_custom = st.tabs(["🤖 Auto-generated dashboard", "🛠️ Build your own chart"])
+    with tab_auto:
+        specs = recommend_charts(df, roles)           # from the FULL data: stable layout
+        if not specs:
+            st.info("Not enough suitable columns to build charts automatically.")
+        else:
+            st.caption(f"{len(specs)} charts chosen from your column types. Hover, zoom and "
+                       "click legend items to explore.")
+            show_chart_grid(filtered, specs, f"dash_auto_{sig}")
+    with tab_custom:
+        render_custom_chart(filtered, roles, sig)
+
+    with st.expander("📄 Data behind the dashboard"):
+        st.dataframe(filtered.head(100))
+        stem = Path(st.session_state["filename"]).stem
+        st.download_button("⬇️ Download filtered data (CSV)", data=cached_csv(filtered),
+                           file_name=f"{stem}_filtered.csv", mime="text/csv",
+                           key=f"dash_dl_{sig}_{len(filtered)}")
+
+# --------------------------------------------------------------------------
 # Main: sidebar navigation
 # --------------------------------------------------------------------------
 
@@ -1122,7 +1318,8 @@ def main() -> None:
     page = st.sidebar.radio("Navigation", ["📤 Upload & Preview", "📊 Data Profile",
                                            "🧹 Data Cleaning", "🎯 Outlier Detection",
                                            "🔧 Transformation & Export",
-                                           "🔍 Exploratory Analysis"])
+                                           "🔍 Exploratory Analysis",
+                                           "📈 Interactive Dashboard"])
     if has_data():
         st.sidebar.divider()
         st.sidebar.caption(f"Dataset: {st.session_state['filename']}")
@@ -1139,7 +1336,9 @@ def main() -> None:
         render_outlier_page()
     elif page == "🔧 Transformation & Export":
         render_transformation_page()
-    else:
+    elif page == "🔍 Exploratory Analysis":
         render_eda_page()
+    else:
+        render_dashboard_page()
 
 main()
