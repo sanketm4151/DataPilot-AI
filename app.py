@@ -13,6 +13,16 @@ from modules.data_transformation import (CALC_OPERATORS, DATE_PARTS, DTYPE_TARGE
                                          add_calculated_column, change_dtype, drop_columns,
                                          extract_date_parts, filter_rows, rename_columns,
                                          to_csv_bytes, to_excel_bytes)
+from modules.eda import (CORRELATION_METHODS, TREND_AGGREGATIONS, TREND_FREQUENCIES, EDAError,
+                         categorical_columns, categorical_statistics, category_bar_figure,
+                         category_counts, comparison_figure, correlation_heatmap,
+                         correlation_matrix, crosstab_figure, crosstab_table, date_columns,
+                         distribution_summary, generate_highlights, group_comparison,
+                         histogram_figure, missing_bar_figure, missing_pattern_figure,
+                         missing_summary, numeric_columns, numeric_statistics,
+                         relationship_summary, scatter_figure, top_correlations,
+                         trend_figure, trend_over_time, trend_summary, variation_explained,
+                         variation_label)
 from modules.outlier_detection import (ACTION_LABELS, DEFAULT_THRESHOLDS, OUTLIER_METHODS,
                                        apply_outlier_action, detect_outliers,
                                        get_numeric_columns, get_outlier_rows)
@@ -860,6 +870,243 @@ def render_transformation_page() -> None:
         st.markdown("**Original vs. current data**")
         st.dataframe(summarize_change(st.session_state["original_df"], df))
 
+
+# --------------------------------------------------------------------------
+# Page 6: Exploratory Data Analysis
+# --------------------------------------------------------------------------
+def eda_run(function, *args, **kwargs):
+    """Run an EDA function; show a friendly error instead of crashing."""
+    try:
+        return function(*args, **kwargs)
+    except EDAError as error:
+        st.error(str(error))
+        return None
+
+
+def render_eda_page() -> None:
+    st.header("🔍 Exploratory Analysis")
+    if not has_data():
+        st.info("Please upload a dataset first (Upload & Preview page).")
+        return
+
+    df = st.session_state["working_df"]
+    sig = data_signature(df)
+    num_cols, cat_cols, date_cols = numeric_columns(df), categorical_columns(df), date_columns(df)
+    st.caption("EDA only reads your data: nothing here changes it. For the best results, "
+               "clean the data first (Data Cleaning page).")
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        kpi_card("Rows", f"{df.shape[0]:,}")
+    with c2:
+        kpi_card("Numeric columns", len(num_cols))
+    with c3:
+        kpi_card("Categorical columns", len(cat_cols))
+    with c4:
+        kpi_card("Date columns", len(date_cols))
+
+    with st.expander("💡 Automatic highlights", expanded=True):
+        for note in generate_highlights(df):
+            st.markdown(f"- {note}")
+
+    (tab_stats, tab_corr, tab_dist, tab_missing,
+     tab_cats, tab_trend, tab_compare) = st.tabs([
+        "📋 Statistics", "🔗 Correlation", "📈 Distributions", "❓ Missing values",
+        "🏷️ Categories", "📅 Trends", "⚖️ Comparisons"])
+
+    # ============ Statistics ============
+    with tab_stats:
+        st.markdown("**Numeric columns**")
+        stats = numeric_statistics(df)
+        if stats.empty:
+            st.info("No numeric columns. If numbers are stored as text, convert them on the "
+                    "Data Cleaning page.")
+        else:
+            st.dataframe(stats)
+            st.caption("skew: 0 = symmetric; above +1 or below -1 = strongly skewed. "
+                       "kurtosis: high values mean many extreme values.")
+        st.markdown("**Categorical columns**")
+        cat_stats = categorical_statistics(df)
+        if cat_stats.empty:
+            st.info("No categorical columns detected.")
+        else:
+            st.dataframe(cat_stats)
+
+    # ============ Correlation ============
+    with tab_corr:
+        if len(num_cols) < 2:
+            st.info("At least two numeric columns are needed.")
+        else:
+            method = st.radio("Method", list(CORRELATION_METHODS), horizontal=True,
+                              format_func=CORRELATION_METHODS.get, key=f"eda_corr_method_{sig}")
+            chosen = st.multiselect("Columns", num_cols, default=num_cols[:15],
+                                    key=f"eda_corr_cols_{sig}")
+            corr = eda_run(correlation_matrix, df, chosen, method)
+            if corr is not None:
+                st.plotly_chart(correlation_heatmap(corr))
+                skipped = [c for c in chosen if c not in corr.columns]
+                if skipped:
+                    st.caption("Skipped (only one distinct value, so correlation is "
+                               f"undefined): {', '.join(skipped)}")
+                st.markdown("**Strongest relationships**")
+                st.dataframe(top_correlations(corr, 10))
+                st.caption("Correlation shows that two columns move together. It does not "
+                           "prove that one causes the other.")
+
+    # ============ Distributions ============
+    with tab_dist:
+        if not num_cols:
+            st.info("No numeric columns to analyze.")
+        else:
+            column = st.selectbox("Numeric column", num_cols, key=f"eda_dist_col_{sig}")
+            bins = st.slider("Number of bins", 5, 100, 30, key=f"eda_dist_bins_{sig}")
+            group_options = ["(none)"] + [c for c in cat_cols if df[c].nunique() <= 15]
+            group = st.selectbox("Split by (optional)", group_options,
+                                 key=f"eda_dist_group_{sig}")
+            summary = eda_run(distribution_summary, df[column])
+            if summary is not None:
+                d1, d2, d3, d4 = st.columns(4)
+                with d1:
+                    kpi_card("Mean", f"{summary['mean']:,.2f}")
+                with d2:
+                    kpi_card("Median", f"{summary['median']:,.2f}")
+                with d3:
+                    kpi_card("Std deviation", f"{summary['std']:,.2f}")
+                with d4:
+                    kpi_card("Skew", summary["skew"])
+                st.info(f"Shape: **{summary['shape']}**")
+            fig = eda_run(histogram_figure, df, column, bins,
+                          None if group == "(none)" else group)
+            if fig is not None:
+                st.plotly_chart(fig)
+
+    # ============ Missing values ============
+    with tab_missing:
+        missing = missing_summary(df)
+        if missing.empty:
+            st.success("No missing values 🎉")
+        else:
+            st.plotly_chart(missing_bar_figure(missing))
+            pattern = missing_pattern_figure(df)
+            if pattern is not None:
+                st.plotly_chart(pattern)
+                st.caption("Gaps that line up vertically are missing together (e.g. the same "
+                           "customers skipped several questions).")
+            st.dataframe(missing)
+
+    # ============ Categories ============
+    with tab_cats:
+        if not cat_cols:
+            st.info("No categorical columns detected.")
+        else:
+            column = st.selectbox("Categorical column", cat_cols, key=f"eda_cat_col_{sig}")
+            top_n = st.slider("Show the top N categories", 3, 30, 10, key=f"eda_cat_top_{sig}")
+            table = eda_run(category_counts, df, column, top_n)
+            if table is not None:
+                st.plotly_chart(category_bar_figure(table, column))
+                st.dataframe(table)
+
+    # ============ Trends ============
+    with tab_trend:
+        if not date_cols:
+            st.info("No real date columns yet. Convert text dates to 'Date / time' on the "
+                    "Data Cleaning page (Data types tab) first.")
+        else:
+            t1, t2, t3 = st.columns(3)
+            date_col = t1.selectbox("Date column", date_cols, key=f"eda_trend_date_{sig}")
+            freq = t2.selectbox("Time step", list(TREND_FREQUENCIES), index=2,
+                                format_func=TREND_FREQUENCIES.get, key=f"eda_trend_freq_{sig}")
+            agg = t3.selectbox("Measure", list(TREND_AGGREGATIONS),
+                               format_func=TREND_AGGREGATIONS.get, key=f"eda_trend_agg_{sig}")
+            value_col, label = None, TREND_AGGREGATIONS["count"]
+            if agg != "count":
+                if not num_cols:
+                    st.info("No numeric column to measure. Choose 'Number of rows'.")
+                    return_early = True
+                else:
+                    value_col = st.selectbox("Numeric column", num_cols,
+                                             key=f"eda_trend_val_{sig}")
+                    label = f"{TREND_AGGREGATIONS[agg]} of {value_col}"
+                    return_early = False
+            else:
+                return_early = False
+            if not return_early:
+                trend = eda_run(trend_over_time, df, date_col, value_col, freq, agg)
+                if trend is not None:
+                    info = trend_summary(trend)
+                    k1, k2, k3, k4 = st.columns(4)
+                    with k1:
+                        kpi_card("Periods", info["periods"])
+                    with k2:
+                        change = info["overall_change_pct"]
+                        kpi_card("First → last", f"{change:+.1f}%" if change is not None else "n/a")
+                    with k3:
+                        kpi_card("Peak", f"{info['peak_value']:,.0f}",
+                                 info["peak_period"].strftime("%Y-%m-%d"))
+                    with k4:
+                        kpi_card("Lowest", f"{info['low_value']:,.0f}",
+                                 info["low_period"].strftime("%Y-%m-%d"))
+                    st.plotly_chart(trend_figure(trend, label, f"{label} per period"))
+                    with st.expander("Trend table"):
+                        st.dataframe(trend)
+
+    # ============ Comparisons ============
+    with tab_compare:
+        mode = st.radio("Compare", ["Numeric by category", "Numeric vs numeric",
+                                    "Category vs category"], horizontal=True,
+                        key=f"eda_cmp_mode_{sig}")
+
+        if mode == "Numeric by category":
+            if not cat_cols or not num_cols:
+                st.info("This needs at least one categorical and one numeric column.")
+            else:
+                a, b = st.columns(2)
+                category = a.selectbox("Category", cat_cols, key=f"eda_cmp_cat_{sig}")
+                value = b.selectbox("Numeric column", num_cols, key=f"eda_cmp_val_{sig}")
+                kind = st.radio("Chart", ["box", "bar"], horizontal=True,
+                                format_func={"box": "Box plot (spread)",
+                                             "bar": "Bar (average)"}.get,
+                                key=f"eda_cmp_kind_{sig}")
+                table = eda_run(group_comparison, df, category, value)
+                fig = eda_run(comparison_figure, df, category, value, kind)
+                if table is not None and fig is not None:
+                    eta = variation_explained(df, category, value)
+                    st.info(f"'{category}' explains **{eta * 100:.1f}%** of the variation in "
+                            f"'{value}' (effect: **{variation_label(eta)}**).")
+                    st.plotly_chart(fig)
+                    st.dataframe(table)
+
+        elif mode == "Numeric vs numeric":
+            if len(num_cols) < 2:
+                st.info("At least two numeric columns are needed.")
+            else:
+                a, b, c = st.columns(3)
+                x = a.selectbox("X axis", num_cols, key=f"eda_sc_x_{sig}")
+                y = b.selectbox("Y axis", num_cols, index=1, key=f"eda_sc_y_{sig}")
+                colors = ["(none)"] + [c_ for c_ in cat_cols if df[c_].nunique() <= 15]
+                color = c.selectbox("Colour by (optional)", colors, key=f"eda_sc_color_{sig}")
+                info = eda_run(relationship_summary, df, x, y)
+                fig = eda_run(scatter_figure, df, x, y, None if color == "(none)" else color)
+                if info is not None and fig is not None:
+                    st.info(f"Relationship: **{info['strength']}** "
+                            f"(Pearson {info['pearson']}, Spearman {info['spearman']}). "
+                            f"On average, each +1 in '{x}' goes with "
+                            f"{info['slope']:+.3f} in '{y}'.")
+                    st.plotly_chart(fig)
+
+        else:
+            if len(cat_cols) < 2:
+                st.info("At least two categorical columns are needed.")
+            else:
+                a, b, c = st.columns(3)
+                first = a.selectbox("Rows", cat_cols, key=f"eda_ct_a_{sig}")
+                second = b.selectbox("Columns", cat_cols, index=1, key=f"eda_ct_b_{sig}")
+                percent = c.checkbox("Show % of each row", key=f"eda_ct_pct_{sig}")
+                table = eda_run(crosstab_table, df, first, second, percent)
+                if table is not None:
+                    st.plotly_chart(crosstab_figure(table, first, second, percent))
+                    st.dataframe(table)
+
 # --------------------------------------------------------------------------
 # Main: sidebar navigation
 # --------------------------------------------------------------------------
@@ -874,7 +1121,8 @@ def main() -> None:
     st.sidebar.caption("Automated Data Cleaning & Analytics")
     page = st.sidebar.radio("Navigation", ["📤 Upload & Preview", "📊 Data Profile",
                                            "🧹 Data Cleaning", "🎯 Outlier Detection",
-                                           "🔧 Transformation & Export"])
+                                           "🔧 Transformation & Export",
+                                           "🔍 Exploratory Analysis"])
     if has_data():
         st.sidebar.divider()
         st.sidebar.caption(f"Dataset: {st.session_state['filename']}")
@@ -889,8 +1137,9 @@ def main() -> None:
         render_cleaning_page()
     elif page == "🎯 Outlier Detection":
         render_outlier_page()
-    else:
+    elif page == "🔧 Transformation & Export":
         render_transformation_page()
-
+    else:
+        render_eda_page()
 
 main()
