@@ -5,11 +5,20 @@ app.py only handles the user interface. All real logic lives in modules/.
 from pathlib import Path
 
 import pandas as pd
+from pandas.api import types as ptypes
 import plotly.express as px
 import streamlit as st
 
+from modules.data_transformation import (CALC_OPERATORS, DATE_PARTS, DTYPE_TARGETS,
+                                         add_calculated_column, change_dtype, drop_columns,
+                                         extract_date_parts, filter_rows, rename_columns,
+                                         to_csv_bytes, to_excel_bytes)
+from modules.outlier_detection import (ACTION_LABELS, DEFAULT_THRESHOLDS, OUTLIER_METHODS,
+                                       apply_outlier_action, detect_outliers,
+                                       get_numeric_columns, get_outlier_rows)
 from modules.data_loader import (MAX_FILE_SIZE_MB, DataLoadError,
                                  classify_columns, get_excel_sheets, load_file)
+
 from modules.data_cleaner import (METHOD_LABELS, CleaningError, apply_category_mapping,
                                   apply_missing_treatment, apply_recommended_fills,
                                   changed_columns, convert_to_datetime, convert_to_numeric,
@@ -507,6 +516,350 @@ def render_cleaning_page() -> None:
         st.markdown("**Original vs. current data**")
         st.dataframe(summarize_change(st.session_state["original_df"], df))
 
+
+# --------------------------------------------------------------------------
+# Shared helpers for Phase 5 pages
+# --------------------------------------------------------------------------
+def history_bar(prefix: str) -> None:
+    """Undo / reset buttons (the prefix keeps widget keys unique per page)."""
+    left, middle, right = st.columns([1, 1, 3])
+    left.button("↩️ Undo last", on_click=undo_last, key=f"{prefix}_undo",
+                disabled=not st.session_state.get("history"))
+    middle.button("🔄 Reset to original", on_click=reset_to_original, key=f"{prefix}_reset")
+    right.caption("Every change is previewed first and only applied when you approve. "
+                  "Your original upload is always preserved.")
+
+
+def data_signature(df: pd.DataFrame) -> int:
+    """Changes whenever columns or row count change; used in widget keys so that
+    dropdowns reset cleanly after you apply a change."""
+    return abs(hash((tuple(df.columns), len(df))))
+
+
+@st.cache_data(show_spinner=False)
+def cached_csv(df: pd.DataFrame) -> bytes:
+    return to_csv_bytes(df)
+
+
+@st.cache_data(show_spinner="Building Excel file...")
+def cached_excel(df: pd.DataFrame) -> bytes:
+    return to_excel_bytes(df)
+
+
+# --------------------------------------------------------------------------
+# Page 4: Outlier Detection
+# --------------------------------------------------------------------------
+def render_outlier_page() -> None:
+    st.header("🎯 Outlier Detection")
+    if not has_data():
+        st.info("Please upload a dataset first (Upload & Preview page).")
+        return
+
+    df = st.session_state["working_df"]
+    numeric_cols = get_numeric_columns(df)
+    if not numeric_cols:
+        st.info("No numeric columns found. If numbers are stored as text, convert them on "
+                "the Data Cleaning page first.")
+        return
+    sig = data_signature(df)
+    history_bar("outliers")
+    st.caption("An outlier is an unusual value, but not necessarily a mistake (a very large "
+               "order can be real). Review the flagged rows before changing anything.")
+
+    # ---- Settings ----
+    method = st.radio("Detection method", list(OUTLIER_METHODS), horizontal=True,
+                      format_func=OUTLIER_METHODS.get, key=f"out_method_{sig}")
+    columns = st.multiselect("Numeric columns to check", numeric_cols, default=numeric_cols,
+                             key=f"out_cols_{sig}")
+    threshold, contamination = None, 0.05
+    if method == "iqr":
+        threshold = st.slider("IQR multiplier (1.5 = standard, 3.0 = only extreme values)",
+                              1.0, 3.0, DEFAULT_THRESHOLDS["iqr"], 0.1, key=f"out_thr_iqr_{sig}")
+    elif method == "zscore":
+        threshold = st.slider("Z-score threshold (3.0 = standard)",
+                              2.0, 5.0, DEFAULT_THRESHOLDS["zscore"], 0.1,
+                              key=f"out_thr_z_{sig}")
+    else:
+        contamination = st.slider("Expected share of outliers", 0.01, 0.20, 0.05, 0.01,
+                                  key=f"out_contam_{sig}")
+        st.caption("Isolation Forest always flags about this share of rows as the most unusual "
+                   "ones, so raise or lower it to match your expectations.")
+    if not columns:
+        st.info("Select at least one column.")
+        return
+
+    try:
+        detection = detect_outliers(df, columns, method, threshold=threshold,
+                                    contamination=contamination)
+    except CleaningError as error:
+        st.error(str(error))
+        return
+
+    flagged, total = detection["flagged_rows"], detection["total_rows"]
+    summary = detection["summary"]
+
+    # ---- Results ----
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        kpi_card("Rows flagged", f"{flagged:,}", f"{flagged / total * 100:.1f}% of {total:,} rows")
+    with c2:
+        kpi_card("Columns with outliers", int((summary["Outliers"] > 0).sum()))
+    with c3:
+        kpi_card("Method", OUTLIER_METHODS[method])
+
+    st.subheader("Summary per column")
+    st.dataframe(summary)
+
+    chart_options = detection["columns"]
+    chart_col = st.selectbox("Column to visualize", chart_options,
+                             key=f"out_chart_{sig}_{'|'.join(chart_options)}")
+    if chart_col in detection["flags"].columns:
+        flagged_values = detection["flags"][chart_col].to_numpy()
+    else:                                       # Isolation Forest: one flag for the whole row
+        flagged_values = detection["any_mask"].to_numpy()
+    plot_df = pd.DataFrame({"row": range(len(df)),
+                            "value": df[chart_col].astype("float64").to_numpy(),
+                            "status": pd.Series(flagged_values).map(
+                                {True: "Potential outlier", False: "Normal"})})
+    normal, odd = plot_df[plot_df["status"] == "Normal"], plot_df[plot_df["status"] != "Normal"]
+    if len(normal) > 5000:                      # keep the chart fast; ALL outliers are kept
+        normal = normal.sample(5000, random_state=0)
+    fig = px.scatter(pd.concat([normal, odd]), x="row", y="value", color="status",
+                     color_discrete_map={"Normal": "#4F8BF9", "Potential outlier": "#E63946"},
+                     title=f"{chart_col}: normal values vs potential outliers", opacity=0.7)
+    st.plotly_chart(fig)
+
+    if flagged == 0:
+        st.success("No outliers detected with these settings 🎉")
+        return
+
+    st.subheader("Flagged rows")
+    st.caption("Showing up to 200 rows. 'flagged_in' says which column(s) triggered the flag.")
+    st.dataframe(get_outlier_rows(df, detection, limit=200))
+
+    # ---- Treatment ----
+    st.subheader("What should happen to these outliers?")
+    actions = ["keep", "remove"] if method == "isolation_forest" else list(ACTION_LABELS)
+    action = st.radio("Treatment", actions, format_func=ACTION_LABELS.get,
+                      key=f"out_action_{sig}_{method}")
+    if action == "keep":
+        st.info("Outliers are kept: nothing changes.")
+        return
+    after, log = safe_run(apply_outlier_action, df, detection, action)
+    if after is None or log is None:
+        return
+    show_preview(df, after, log, key=f"outliers_{action}",
+                 column=chart_col if action in ("cap", "blank") else None,
+                 confirm_text=("I understand these rows are removed from the working copy "
+                               "(the original stays safe)") if action == "remove" else None)
+
+
+# --------------------------------------------------------------------------
+# Page 5: Transformation & Export
+# --------------------------------------------------------------------------
+def filter_value_input(series: pd.Series, op: str, key: str):
+    """Draw the right input widget(s) for a filter. Returns (value, is_ready)."""
+    if op in ("is missing", "is not missing"):
+        return None, True
+    non_null = series.dropna()
+    is_num = ptypes.is_numeric_dtype(series) and not ptypes.is_bool_dtype(series)
+    is_date = ptypes.is_datetime64_any_dtype(series)
+
+    if is_num or is_date:
+        if non_null.empty:
+            st.warning("This column has no values to filter on.")
+            return None, False
+        low = float(non_null.min()) if is_num else non_null.min().date()
+        high = float(non_null.max()) if is_num else non_null.max().date()
+
+        def pick(label, default, suffix, container):
+            if is_num:
+                return container.number_input(label, value=default, key=f"{key}_{suffix}")
+            return container.date_input(label, value=default, key=f"{key}_{suffix}")
+
+        if op == "between":
+            left, right = st.columns(2)
+            return (pick("From", low, "from", left), pick("To", high, "to", right)), True
+        return pick("Value", low, "value", st), True
+
+    if op in ("is one of", "is not one of"):
+        options = sorted(non_null.unique().tolist(), key=str)
+        if len(options) > 500:
+            st.info("Too many distinct values to list. Use 'contains' instead.")
+            return None, False
+        chosen = st.multiselect("Values", options, key=f"{key}_values")
+        return chosen, bool(chosen)
+
+    text = st.text_input("Text to look for (not case-sensitive)", key=f"{key}_text")
+    return text, bool(text.strip())
+
+
+def render_transformation_page() -> None:
+    st.header("🔧 Transformation & Export")
+    if not has_data():
+        st.info("Please upload a dataset first (Upload & Preview page).")
+        return
+
+    df = st.session_state["working_df"]
+    sig = data_signature(df)
+    history_bar("transform")
+    st.caption(f"Current data: {df.shape[0]:,} rows × {df.shape[1]} columns")
+
+    (tab_types, tab_rename, tab_drop, tab_filter,
+     tab_calc, tab_dates, tab_download) = st.tabs([
+        "🔁 Data types", "✏️ Rename", "🗑️ Drop columns", "🔍 Filter rows",
+        "➕ Calculated column", "📅 Date features", "⬇️ Download"])
+
+    # ============ Data types ============
+    with tab_types:
+        column = st.selectbox("Column", list(df.columns), key=f"tf_type_col_{sig}")
+        st.caption(f"Currently stored as: {df[column].dtype}")
+        target = st.selectbox("Convert to", list(DTYPE_TARGETS), format_func=DTYPE_TARGETS.get,
+                              key=f"tf_type_target_{sig}")
+        dayfirst = False
+        if target == "datetime":
+            dayfirst = st.checkbox("Dates are day-first (e.g. 31/12/2024)",
+                                   key=f"tf_dayfirst_{sig}")
+        after, log = safe_run(change_dtype, df, column, target, dayfirst)
+        if after is not None:
+            if log is None:
+                st.success("This column already has that type.")
+            else:
+                show_preview(df, after, log, key="tf_types", column=column)
+
+    # ============ Rename ============
+    with tab_rename:
+        st.caption("Edit the 'New name' cells you want to change.")
+        table = pd.DataFrame({"Current name": list(df.columns), "New name": list(df.columns)})
+        edited = st.data_editor(table, hide_index=True, disabled=["Current name"],
+                                key=f"tf_rename_{sig}")
+        mapping = {row["Current name"]: row["New name"] for _, row in edited.iterrows()
+                   if row["New name"] != row["Current name"]}
+        if not mapping:
+            st.info("Change a name above to see the preview.")
+        else:
+            after, log = safe_run(rename_columns, df, mapping)
+            if after is not None and log is not None:
+                show_preview(df, after, log, key="tf_rename")
+
+    # ============ Drop columns ============
+    with tab_drop:
+        hints = [i["column"] for i in detect_type_issues(df)
+                 if i["kind"] in ("empty_column", "constant_column")]
+        if hints:
+            st.caption("Columns with no analytical value (empty or a single value): "
+                       + ", ".join(dict.fromkeys(hints)))
+        to_drop = st.multiselect("Columns to remove", list(df.columns), key=f"tf_drop_{sig}")
+        if to_drop:
+            after, log = safe_run(drop_columns, df, to_drop)
+            if after is not None and log is not None:
+                show_preview(df, after, log, key="tf_drop",
+                             confirm_text="I understand these columns are removed from the "
+                                          "working copy (the original stays safe)")
+        else:
+            st.info("Select one or more columns to see the preview.")
+
+    # ============ Filter rows ============
+    with tab_filter:
+        column = st.selectbox("Column", list(df.columns), key=f"tf_filter_col_{sig}")
+        series = df[column]
+        is_num = ptypes.is_numeric_dtype(series) and not ptypes.is_bool_dtype(series)
+        if is_num:
+            operators = ["between", ">", ">=", "<", "<=", "==", "!=",
+                         "is missing", "is not missing"]
+        elif ptypes.is_datetime64_any_dtype(series):
+            operators = ["between", ">", ">=", "<", "<=", "is missing", "is not missing"]
+        else:
+            operators = ["is one of", "is not one of", "contains", "is missing", "is not missing"]
+        op = st.selectbox("Keep rows where the value", operators,
+                          key=f"tf_filter_op_{sig}_{column}")
+        value, ready = filter_value_input(series, op, key=f"tf_filter_{sig}_{column}_{op}")
+        if ready:
+            after, log = safe_run(filter_rows, df, column, op, value)
+            if after is not None:
+                if log is None:
+                    st.success("All rows match this condition, so nothing would be removed.")
+                else:
+                    show_preview(df, after, log, key="tf_filter",
+                                 confirm_text="I understand rows that do not match are removed "
+                                              "from the working copy (the original stays safe)")
+        else:
+            st.info("Enter a value to see the preview.")
+
+    # ============ Calculated column ============
+    with tab_calc:
+        numeric_cols = get_numeric_columns(df)
+        if not numeric_cols:
+            st.info("This dataset has no numeric columns.")
+        else:
+            left = st.selectbox("First column", numeric_cols, key=f"tf_calc_left_{sig}")
+            calc_op = st.selectbox("Operation", list(CALC_OPERATORS),
+                                   format_func=CALC_OPERATORS.get, key=f"tf_calc_op_{sig}")
+            mode = st.radio("The second value is", ["Another column", "A fixed number"],
+                            horizontal=True, key=f"tf_calc_mode_{sig}")
+            if mode == "Another column":
+                right = st.selectbox("Second column", numeric_cols, key=f"tf_calc_right_{sig}")
+                right_is_column = True
+            else:
+                right = st.number_input("Number", value=1.0, key=f"tf_calc_number_{sig}")
+                right_is_column = False
+            new_name = st.text_input("Name of the new column", placeholder="e.g. gross_revenue",
+                                     key=f"tf_calc_name_{sig}")
+            if not new_name.strip():
+                st.info("Enter a name for the new column to see the preview.")
+            else:
+                after, log = safe_run(add_calculated_column, df, new_name, left, calc_op,
+                                      right, right_is_column)
+                if after is not None and log is not None:
+                    show_preview(df, after, log, key="tf_calc")
+                    shown = [left] + ([right] if right_is_column and right != left else []) \
+                        + [new_name.strip()]
+                    st.caption("First rows of the new column:")
+                    st.dataframe(after[shown].head(5))
+
+    # ============ Date features ============
+    with tab_dates:
+        date_cols = [c for c in df.columns if ptypes.is_datetime64_any_dtype(df[c])]
+        if not date_cols:
+            st.info("No real date columns yet. Convert text dates to 'Date / time' in the "
+                    "Data types tab (or on the Data Cleaning page) first.")
+        else:
+            column = st.selectbox("Date column", date_cols, key=f"tf_date_col_{sig}")
+            parts = st.multiselect("Parts to extract", list(DATE_PARTS),
+                                   default=["year", "month_name", "year_month"],
+                                   format_func=DATE_PARTS.get, key=f"tf_date_parts_{sig}")
+            if not parts:
+                st.info("Select at least one part.")
+            else:
+                after, log = safe_run(extract_date_parts, df, column, parts)
+                if after is not None and log is not None:
+                    show_preview(df, after, log, key="tf_dates")
+                    new_cols = [c for c in after.columns if c not in df.columns]
+                    st.dataframe(after[[column] + new_cols].head(5))
+
+    # ============ Download ============
+    with tab_download:
+        st.write("Download the current (cleaned and transformed) data. "
+                 "Your original file is not touched.")
+        stem = Path(st.session_state["filename"]).stem
+        d1, d2 = st.columns(2)
+        d1.download_button("⬇️ Download CSV", data=cached_csv(df), file_name=f"{stem}_cleaned.csv",
+                           mime="text/csv", key=f"dl_csv_{sig}")
+        try:
+            d2.download_button(
+                "⬇️ Download Excel", data=cached_excel(df), file_name=f"{stem}_cleaned.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key=f"dl_xlsx_{sig}")
+        except CleaningError as error:
+            d2.warning(str(error))
+        if st.session_state["cleaning_log"]:
+            log_csv = pd.DataFrame(st.session_state["cleaning_log"]).to_csv(index=False)
+            st.download_button("⬇️ Download cleaning log (CSV)", data=log_csv.encode("utf-8"),
+                               file_name=f"{stem}_cleaning_log.csv", mime="text/csv",
+                               key=f"dl_log_{sig}")
+        st.markdown("**Original vs. current data**")
+        st.dataframe(summarize_change(st.session_state["original_df"], df))
+
 # --------------------------------------------------------------------------
 # Main: sidebar navigation
 # --------------------------------------------------------------------------
@@ -520,7 +873,8 @@ def main() -> None:
     st.sidebar.title("🧭 DataPilot AI")
     st.sidebar.caption("Automated Data Cleaning & Analytics")
     page = st.sidebar.radio("Navigation", ["📤 Upload & Preview", "📊 Data Profile",
-                                           "🧹 Data Cleaning"])
+                                           "🧹 Data Cleaning", "🎯 Outlier Detection",
+                                           "🔧 Transformation & Export"])
     if has_data():
         st.sidebar.divider()
         st.sidebar.caption(f"Dataset: {st.session_state['filename']}")
@@ -531,9 +885,12 @@ def main() -> None:
         render_upload_page()
     elif page == "📊 Data Profile":
         render_profile_page()
-    else:
+    elif page == "🧹 Data Cleaning":
         render_cleaning_page()
-
+    elif page == "🎯 Outlier Detection":
+        render_outlier_page()
+    else:
+        render_transformation_page()
 
 
 main()
