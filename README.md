@@ -153,4 +153,4 @@ MIT. See [LICENSE](LICENSE).
 
 ## 👤 Author
 
-**Sanket Mane** · linkedin.com/in/sanket-mane-2194a3310 · sanketm4151@gmail.com
+**Sanket Mane** · https://www.linkedin.com/in/sanket-mane-2194a3310/ · sanketm4151@gmail.com
