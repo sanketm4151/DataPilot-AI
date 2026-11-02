@@ -321,13 +321,46 @@ def extract_date_parts(df: pd.DataFrame, column: str, parts):
     return result, _make_log("Extract date parts", column, details, df, result,
                              len(df) * len(parts))
 
-
 # --------------------------------------------------------------------------
 # 6. Export (bytes for Streamlit download buttons)
 # --------------------------------------------------------------------------
+_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+
+
+def _is_formula_like(value) -> bool:
+    """True for text that Excel could run as a formula ('=1+1', '@cmd', '-abc').
+
+    A number stored as text ('-5', '-1,200') is NOT treated as a formula.
+    """
+    if not isinstance(value, str) or len(value) < 2 or not value.startswith(_FORMULA_PREFIXES):
+        return False
+    try:
+        float(value.replace(",", ""))
+        return False
+    except ValueError:
+        return True
+
+
+def sanitize_for_export(df: pd.DataFrame) -> pd.DataFrame:
+    """A copy that is safe to open in Excel.
+
+    Text that looks like a formula gets a leading apostrophe, so Excel shows it as text
+    instead of running it ('formula injection'). The input is never modified.
+    """
+    out = df.copy()
+    out.columns = [f"'{c}" if _is_formula_like(str(c)) else c for c in out.columns]
+    for position in range(out.shape[1]):
+        series = out.iloc[:, position]
+        if ptypes.is_object_dtype(series) or ptypes.is_string_dtype(series):
+            flagged = series.map(_is_formula_like).astype(bool)
+            if flagged.any():
+                out.isetitem(position, series.where(~flagged, "'" + series.astype(str)))
+    return out
+
+
 def to_csv_bytes(df: pd.DataFrame) -> bytes:
     """CSV with a BOM ('utf-8-sig') so Excel shows special characters correctly."""
-    return df.to_csv(index=False).encode("utf-8-sig")
+    return sanitize_for_export(df).to_csv(index=False).encode("utf-8-sig")
 
 
 def to_excel_bytes(df: pd.DataFrame, sheet_name: str = "Cleaned data") -> bytes:
@@ -335,5 +368,5 @@ def to_excel_bytes(df: pd.DataFrame, sheet_name: str = "Cleaned data") -> bytes:
         raise CleaningError("This dataset has too many rows for one Excel sheet. Use CSV.")
     buffer = io.BytesIO()
     with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-        df.to_excel(writer, index=False, sheet_name=sheet_name)
+        sanitize_for_export(df).to_excel(writer, index=False, sheet_name=sheet_name)
     return buffer.getvalue()

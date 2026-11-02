@@ -10,6 +10,9 @@ import plotly.express as px
 import streamlit as st
 
 
+from modules.database import (DatabaseError, clear_history, delete_session, get_operations,
+                              history_enabled, list_sessions, save_session)
+
 from modules.report_generator import (build_excel_report, build_pdf_report,
                                       build_report_context, make_report_charts)
 
@@ -167,6 +170,8 @@ def render_upload_page() -> None:
     types = st.session_state["column_types"]
 
     st.success(f"Loaded **{st.session_state['filename']}**")
+    for note in st.session_state["original_df"].attrs.get("load_notes", []):
+        st.info(note)
 
     # Dimension KPIs
     c1, c2, c3, c4 = st.columns(4)
@@ -879,8 +884,8 @@ def render_transformation_page() -> None:
         except CleaningError as error:
             d2.warning(str(error))
         if st.session_state["cleaning_log"]:
-            log_csv = pd.DataFrame(st.session_state["cleaning_log"]).to_csv(index=False)
-            st.download_button("⬇️ Download cleaning log (CSV)", data=log_csv.encode("utf-8"),
+                        log_csv = to_csv_bytes(pd.DataFrame(st.session_state["cleaning_log"]))
+                        st.download_button("⬇️ Download cleaning log (CSV)", data=log_csv,
                                file_name=f"{stem}_cleaning_log.csv", mime="text/csv",
                                key=f"dl_log_{sig}")
         st.markdown("**Original vs. current data**")
@@ -1542,7 +1547,7 @@ def render_reports_page() -> None:
         d2.warning(str(error))
     if log:
         d3.download_button("⬇️ Cleaning log (CSV)",
-                           data=pd.DataFrame(log).to_csv(index=False).encode("utf-8"),
+                            data=to_csv_bytes(pd.DataFrame(log)),
                            file_name=f"{stem}_cleaning_log.csv", mime="text/csv",
                            key=f"rep_log_{sig}")
 
@@ -1612,6 +1617,71 @@ def render_reports_page() -> None:
 
 
 # --------------------------------------------------------------------------
+# Page 10: Session History (SQLite)
+# --------------------------------------------------------------------------
+def render_history_page() -> None:
+    st.header("🗂️ Session History")
+    if not history_enabled():
+        st.info("History is switched off. When on, it saves **only metadata and the cleaning "
+                "log** (file name, row counts, quality scores, operations) in a local SQLite "
+                "file, **never your data**. Turn it on by adding `DATAPILOT_ENABLE_HISTORY=1` "
+                "to your `.env` file and restarting the app. It is off by default on shared "
+                "deployments so visitors never see each other's sessions.")
+        return
+
+    st.caption("Saved sessions contain no dataset values. Only you can see this file: it "
+               "lives on this computer.")
+    if has_data():
+        if st.button("💾 Save current session to history", key="hist_save"):
+            try:
+                original, df = st.session_state["original_df"], st.session_state["working_df"]
+                session_id = save_session(
+                    st.session_state["filename"], get_overview(original), get_overview(df),
+                    calculate_quality_score(original)["overall"],
+                    calculate_quality_score(df)["overall"], st.session_state["cleaning_log"])
+                st.success(f"Saved as session #{session_id}.")
+            except DatabaseError as error:
+                st.error(str(error))
+    else:
+        st.caption("Upload a dataset to save a session.")
+
+    try:
+        sessions = list_sessions()
+    except DatabaseError as error:
+        st.error(str(error))
+        return
+    if sessions.empty:
+        st.info("No saved sessions yet.")
+        return
+
+    st.dataframe(sessions)
+    labels = {int(r.id): f"#{r.id} · {r.filename} · {r.created_at}"
+              for r in sessions.itertuples()}
+    chosen = st.selectbox("Show the cleaning steps of a session", list(labels),
+                          format_func=labels.get, key="hist_pick")
+    try:
+        steps = get_operations(chosen)
+    except DatabaseError as error:
+        st.error(str(error))
+        return
+    if steps.empty:
+        st.caption("This session had no cleaning operations.")
+    else:
+        st.dataframe(steps)
+
+    st.markdown("**Delete**")
+    c1, c2 = st.columns(2)
+    with c1:
+        sure_one = st.checkbox("I understand this deletes the selected session", key="hist_sure1")
+        st.button("🗑️ Delete selected session", key="hist_del", disabled=not sure_one,
+                  on_click=delete_session, args=(chosen,))
+    with c2:
+        sure_all = st.checkbox("I understand this deletes ALL saved sessions", key="hist_sure2")
+        st.button("🗑️ Clear all history", key="hist_clear", disabled=not sure_all,
+                  on_click=clear_history)
+
+
+# --------------------------------------------------------------------------
 # Main: sidebar navigation
 # --------------------------------------------------------------------------
 
@@ -1623,35 +1693,35 @@ def main() -> None:
 
     st.sidebar.title("🧭 DataPilot AI")
     st.sidebar.caption("Automated Data Cleaning & Analytics")
-    page = st.sidebar.radio("Navigation", ["📤 Upload & Preview", "📊 Data Profile",
-                                           "🧹 Data Cleaning", "🎯 Outlier Detection",
-                                           "🔧 Transformation & Export",
-                                           "🔍 Exploratory Analysis",
-                                           "📈 Interactive Dashboard",
-                                           "🤖 AI Insights",
-                                           "📄 Reports & Downloads"])
+    pages = {
+        "📤 Upload & Preview": render_upload_page,
+        "📊 Data Profile": render_profile_page,
+        "🧹 Data Cleaning": render_cleaning_page,
+        "🎯 Outlier Detection": render_outlier_page,
+        "🔧 Transformation & Export": render_transformation_page,
+        "🔍 Exploratory Analysis": render_eda_page,
+        "📈 Interactive Dashboard": render_dashboard_page,
+        "🤖 AI Insights": render_ai_page,
+        "📄 Reports & Downloads": render_reports_page,
+        "🗂️ History": render_history_page,
+    }
+    page = st.sidebar.radio("Navigation", list(pages))
+
     if has_data():
         st.sidebar.divider()
         st.sidebar.caption(f"Dataset: {st.session_state['filename']}")
         df = st.session_state["working_df"]
         st.sidebar.caption(f"{df.shape[0]:,} rows × {df.shape[1]} columns")
 
-    if page == "📤 Upload & Preview":
-        render_upload_page()
-    elif page == "📊 Data Profile":
-        render_profile_page()
-    elif page == "🧹 Data Cleaning":
-        render_cleaning_page()
-    elif page == "🎯 Outlier Detection":
-        render_outlier_page()
-    elif page == "🔧 Transformation & Export":
-        render_transformation_page()
-    elif page == "🔍 Exploratory Analysis":
-        render_eda_page()
-    elif page == "📈 Interactive Dashboard":
-        render_dashboard_page()
-    elif page == "🤖 AI Insights":
-        render_ai_page()
-    else:
-        render_reports_page()
+    try:
+        pages[page]()
+    except Exception as error:         # last line of defence: never show users a raw traceback
+        st.error("Something unexpected went wrong on this page. Your data and your original "
+                 "upload are safe. Try another page, or reset on the Data Cleaning page.")
+        if os.getenv("DATAPILOT_DEBUG", "").strip() == "1":
+            st.exception(error)        # technical details only in development
+        else:
+            st.caption(f"Error type: {type(error).__name__}")
+
+
 main()

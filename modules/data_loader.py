@@ -11,6 +11,8 @@ import pandas as pd
 from pandas.api import types as ptypes
 
 MAX_FILE_SIZE_MB = 50                    # protects the free Streamlit Cloud memory limit
+MAX_ROWS = 1_000_000                     # more rows than this will not fit in free hosting memory
+MAX_COLUMNS = 300
 SUPPORTED_EXTENSIONS = (".csv", ".xlsx")
 # Encodings tried in order. utf-8-sig also handles files with an invisible BOM mark.
 CSV_ENCODINGS = ("utf-8-sig", "cp1252", "latin-1")
@@ -65,7 +67,8 @@ def _read_csv(file_bytes: bytes) -> pd.DataFrame:
 def load_file(file_bytes: bytes, filename: str, sheet_name=None) -> pd.DataFrame:
     """Load a CSV or Excel file (given as raw bytes) into a DataFrame.
 
-    The uploaded file itself is never written to or changed.
+    The uploaded file itself is never written to or changed. Cleanup actions taken while
+    loading (empty rows removed...) are listed in df.attrs["load_notes"].
     """
     extension = os.path.splitext(filename)[1].lower()
     if extension not in SUPPORTED_EXTENSIONS:
@@ -86,10 +89,28 @@ def load_file(file_bytes: bytes, filename: str, sheet_name=None) -> pd.DataFrame
     except Exception as error:
         raise DataLoadError(f"Could not read '{filename}': {error}") from error
 
+    if df.shape[1] > MAX_COLUMNS:
+        raise DataLoadError(f"The file has {df.shape[1]} columns. The limit is {MAX_COLUMNS}.")
+
+    notes = []
+    empty_rows = int(df.isna().all(axis=1).sum())
+    if empty_rows:
+        df = df.dropna(how="all")
+        notes.append(f"Removed {empty_rows} completely empty row(s) while loading.")
+    unnamed_empty = [c for c in df.columns
+                     if str(c).startswith("Unnamed:") and df[c].isna().all()]
+    if unnamed_empty:
+        df = df.drop(columns=unnamed_empty)
+        notes.append(f"Removed {len(unnamed_empty)} empty column(s) without a header.")
+
     if df.empty or df.shape[1] == 0:
         raise DataLoadError("The file has no data rows.")
+    if df.shape[0] > MAX_ROWS:
+        raise DataLoadError(f"The file has {df.shape[0]:,} rows. The limit is {MAX_ROWS:,}.")
 
-    df.columns = [str(column) for column in df.columns]  # column names -> text
+    df = df.reset_index(drop=True)
+    df.columns = [str(column) for column in df.columns]     # column names -> text
+    df.attrs["load_notes"] = notes
     return df
 
 
