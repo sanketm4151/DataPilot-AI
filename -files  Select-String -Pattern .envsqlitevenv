@@ -1,0 +1,11 @@
+[33mcommit 05a89074f1bbd2d5c9ff73732bc54860f33bb2d5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: sanketm4151 <sanketm4151@gmail.com>
+Date:   Mon Nov 2 22:04:55 2026 +0530
+
+    Phase 10: upload validation, formula-safe exports, SQLite history, end-to-end tests
+
+[33mcommit b0b1aa070d8f7c5e69b32282a576941d130eab43[m
+Author: sanketm4151 <sanketm4151@gmail.com>
+Date:   Sun Nov 1 21:22:35 2026 +0530
+
+    Phase 2: project scaffold and environment setup
