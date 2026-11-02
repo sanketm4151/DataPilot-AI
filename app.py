@@ -10,6 +10,9 @@ import plotly.express as px
 import streamlit as st
 
 
+from modules.report_generator import (build_excel_report, build_pdf_report,
+                                      build_report_context, make_report_charts)
+
 from modules.data_transformation import (CALC_OPERATORS, DATE_PARTS, DTYPE_TARGETS,
                                          add_calculated_column, change_dtype, drop_columns,
                                          extract_date_parts, filter_rows, rename_columns,
@@ -1509,6 +1512,106 @@ def render_ai_page() -> None:
                 st.info(st.session_state[explain_key])
 
 # --------------------------------------------------------------------------
+# Page 9: Reports & Downloads
+# --------------------------------------------------------------------------
+def render_reports_page() -> None:
+    st.header("📄 Reports & Downloads")
+    if not has_data():
+        st.info("Please upload a dataset first (Upload & Preview page).")
+        return
+
+    df = st.session_state["working_df"]
+    original = st.session_state["original_df"]
+    log = st.session_state["cleaning_log"]
+    filename = st.session_state["filename"]
+    stem = Path(filename).stem
+    sig = data_signature(df)
+
+    # ---- Quick downloads ----
+    st.subheader("Quick downloads")
+    st.caption("Your original file is not touched: these contain the current (cleaned) data.")
+    d1, d2, d3 = st.columns(3)
+    d1.download_button("⬇️ Cleaned CSV", data=cached_csv(df), file_name=f"{stem}_cleaned.csv",
+                       mime="text/csv", key=f"rep_csv_{sig}")
+    try:
+        d2.download_button(
+            "⬇️ Cleaned Excel", data=cached_excel(df), file_name=f"{stem}_cleaned.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            key=f"rep_xlsx_{sig}")
+    except CleaningError as error:
+        d2.warning(str(error))
+    if log:
+        d3.download_button("⬇️ Cleaning log (CSV)",
+                           data=pd.DataFrame(log).to_csv(index=False).encode("utf-8"),
+                           file_name=f"{stem}_cleaning_log.csv", mime="text/csv",
+                           key=f"rep_log_{sig}")
+
+    # ---- Report builder ----
+    st.subheader("Analysis report (PDF + Excel)")
+    st.caption("The PDF covers: overview, data quality, cleaning operations, statistics, "
+               "charts and insights. The Excel report has one sheet per section.")
+
+    ai_result = st.session_state.get("ai_result")
+    choices = ["Offline rule-based insights (no AI service)"]
+    if ai_result:
+        choices.insert(0, "Latest insights from the AI Insights page")
+    source = st.radio("Insights to include", choices, key=f"rep_source_{sig}")
+    use_ai = bool(ai_result) and source.startswith("Latest")
+    if use_ai:
+        current = cached_ai_summary(df, tuple(detect_sensitive_columns(df)), log)
+        if ai_result.get("fingerprint") != summary_fingerprint(current):
+            st.warning("These insights may be out of date: the data or the privacy settings "
+                       "changed since they were generated. Re-generate them on the AI "
+                       "Insights page if needed.")
+    elif not ai_result:
+        st.caption("Tip: generate insights on the 🤖 AI Insights page first to include them "
+                   "here. Without them, offline insights are used.")
+
+    include_charts = st.checkbox("Include charts in the PDF", value=True,
+                                 key=f"rep_charts_{sig}")
+    max_charts = (st.slider("Number of charts", 2, 8, 6, key=f"rep_nchart_{sig}")
+                  if include_charts else 0)
+
+    report_key = (st.session_state["loaded_key"], sig, len(log), use_ai, max_charts)
+    if st.button("🛠️ Generate reports", key=f"rep_build_{sig}"):
+        with st.spinner("Building the PDF and Excel reports..."):
+            try:
+                context = build_report_context(original, df, log, filename,
+                                               ai_result if use_ai else None)
+                charts = make_report_charts(df, max_charts) if include_charts else []
+                st.session_state["reports"] = {
+                    "key": report_key,
+                    "pdf": build_pdf_report(context, charts),
+                    "xlsx": build_excel_report(context, df),
+                    "charts": len(charts), "wanted": max_charts,
+                    "source": context["ai"]["source"],
+                }
+            except Exception as error:
+                st.error(f"Could not build the report: {error}")
+                st.exception(error)     # TEMPORARY: shows exactly where it failed
+
+    reports = st.session_state.get("reports")
+    if reports and reports["key"] == report_key:
+        st.success(f"Reports ready: {reports['charts']} chart(s), "
+                   f"{reports['source']} insights.")
+        if reports["charts"] < reports["wanted"]:
+            st.caption("Some charts were skipped because the data didn't suit them "
+                       "(for example, no date or too few numeric columns).")
+        b1, b2 = st.columns(2)
+        b1.download_button("⬇️ Download PDF report", data=reports["pdf"],
+                           file_name=f"{stem}_report.pdf", mime="application/pdf",
+                           key=f"rep_pdf_{sig}")
+        b2.download_button(
+            "⬇️ Download Excel report", data=reports["xlsx"],
+            file_name=f"{stem}_report.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            key=f"rep_xlsx_report_{sig}")
+    elif reports:
+        st.info("Your data or settings changed since the last build. "
+                "Click 'Generate reports' again.")
+
+
+# --------------------------------------------------------------------------
 # Main: sidebar navigation
 # --------------------------------------------------------------------------
 
@@ -1525,7 +1628,8 @@ def main() -> None:
                                            "🔧 Transformation & Export",
                                            "🔍 Exploratory Analysis",
                                            "📈 Interactive Dashboard",
-                                           "🤖 AI Insights"])
+                                           "🤖 AI Insights",
+                                           "📄 Reports & Downloads"])
     if has_data():
         st.sidebar.divider()
         st.sidebar.caption(f"Dataset: {st.session_state['filename']}")
@@ -1546,6 +1650,8 @@ def main() -> None:
         render_eda_page()
     elif page == "📈 Interactive Dashboard":
         render_dashboard_page()
-    else:
+    elif page == "🤖 AI Insights":
         render_ai_page()
+    else:
+        render_reports_page()
 main()
