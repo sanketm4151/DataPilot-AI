@@ -54,3 +54,16 @@ def test_load_excel_sheets():
     assert get_excel_sheets(data) == ["first", "second"]
     assert load_file(data, "t.xlsx").shape == (2, 1)
     assert load_file(data, "t.xlsx", "second").shape == (3, 1)
+
+
+
+
+
+def test_env_int_settings(monkeypatch):
+    monkeypatch.delenv("DATAPILOT_TEST_LIMIT", raising=False)
+    assert data_loader._env_int("DATAPILOT_TEST_LIMIT", 7) == 7
+    monkeypatch.setenv("DATAPILOT_TEST_LIMIT", "123")
+    assert data_loader._env_int("DATAPILOT_TEST_LIMIT", 7) == 123
+    for bad in ("abc", "-4", "0", ""):
+        monkeypatch.setenv("DATAPILOT_TEST_LIMIT", bad)
+        assert data_loader._env_int("DATAPILOT_TEST_LIMIT", 7) == 7

@@ -1,7 +1,17 @@
+# Secrets: NEVER commit these
 .env
 .env.*
 !.env.example
-venv/
+.streamlit/secrets.toml
+
+# Python environments and caches
+venv*/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Local data and outputs
+*.sqlite
+*.db
+outputs/
+.DS_Store

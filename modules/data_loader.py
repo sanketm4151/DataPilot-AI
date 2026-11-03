@@ -6,12 +6,25 @@ import csv
 import io
 import os
 import warnings
-
 import pandas as pd
 from pandas.api import types as ptypes
+from dotenv import load_dotenv
 
-MAX_FILE_SIZE_MB = 50                    # protects the free Streamlit Cloud memory limit
-MAX_ROWS = 1_000_000                     # more rows than this will not fit in free hosting memory
+load_dotenv()   # lets DATAPILOT_* settings come from .env when running locally
+
+
+def _env_int(name: str, default: int) -> int:
+    """A positive whole number from an environment variable, or the default."""
+    try:
+        value = int(os.getenv(name, "").strip())
+    except ValueError:
+        return default
+    return value if value > 0 else default
+
+
+# Limits protect small free hosts. Override with environment variables or Streamlit secrets.
+MAX_FILE_SIZE_MB = _env_int("DATAPILOT_MAX_FILE_MB", 50)
+MAX_ROWS = _env_int("DATAPILOT_MAX_ROWS", 1_000_000)
 MAX_COLUMNS = 300
 SUPPORTED_EXTENSIONS = (".csv", ".xlsx")
 # Encodings tried in order. utf-8-sig also handles files with an invisible BOM mark.

@@ -9,6 +9,14 @@ from pandas.api import types as ptypes
 import plotly.express as px
 import streamlit as st
 
+# Streamlit Cloud keeps settings in "Secrets". Copy simple ones into environment variables so
+# the rest of the code can read them with os.getenv. (Locally there is no secrets file: no-op.)
+try:
+    for _name, _value in st.secrets.items():
+        if isinstance(_value, (str, int, float, bool)):
+            os.environ.setdefault(str(_name), str(_value))
+except Exception:
+    pass
 
 from modules.database import (DatabaseError, clear_history, delete_session, get_operations,
                               history_enabled, list_sessions, save_session)
@@ -302,8 +310,10 @@ def render_profile_page() -> None:
 # --------------------------------------------------------------------------
 # Page 3: Data Cleaning
 # --------------------------------------------------------------------------
-MAX_UNDO_STEPS = 5   # how many changes can be undone
-
+try:
+    MAX_UNDO_STEPS = max(1, int(os.getenv("DATAPILOT_MAX_UNDO", "5")))   # changes that can be undone
+except ValueError:
+    MAX_UNDO_STEPS = 5
 
 def refresh_types() -> None:
     """Re-detect column types after the data changed."""
@@ -567,12 +577,11 @@ def data_signature(df: pd.DataFrame) -> int:
     return abs(hash((tuple(df.columns), len(df))))
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=3)
 def cached_csv(df: pd.DataFrame) -> bytes:
     return to_csv_bytes(df)
 
-
-@st.cache_data(show_spinner="Building Excel file...")
+@st.cache_data(show_spinner="Building Excel file...", max_entries=3)
 def cached_excel(df: pd.DataFrame) -> bytes:
     return to_excel_bytes(df)
 
@@ -1321,7 +1330,7 @@ def render_dashboard_page() -> None:
 # --------------------------------------------------------------------------
 # Page 8: AI Data Analyst
 # --------------------------------------------------------------------------
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=3)
 def cached_ai_summary(df: pd.DataFrame, excluded: tuple, cleaning_log: list) -> dict:
     """The privacy-safe summary (cached: it only changes when the data changes)."""
     return build_privacy_safe_summary(df, excluded, cleaning_log)
@@ -1693,6 +1702,9 @@ def main() -> None:
 
     st.sidebar.title("🧭 DataPilot AI")
     st.sidebar.caption("Automated Data Cleaning & Analytics")
+    if os.getenv("DATAPILOT_PUBLIC_DEMO", "").strip() == "1":
+        st.sidebar.warning("Public demo: please upload only non-sensitive data, or use the "
+                           "sample dataset.")
     pages = {
         "📤 Upload & Preview": render_upload_page,
         "📊 Data Profile": render_profile_page,
