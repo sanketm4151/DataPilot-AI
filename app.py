@@ -2,6 +2,7 @@
 
 app.py only handles the user interface. All real logic lives in modules/.
 """
+import os
 from pathlib import Path
 
 import pandas as pd
