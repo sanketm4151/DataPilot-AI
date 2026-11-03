@@ -4,7 +4,7 @@
 
 Built with Python, Pandas, Streamlit, Plotly, Scikit-learn and Google Gemini, as a data analyst portfolio project.
 
-> 🔗 **Live demo:** <add the Streamlit Cloud link after Phase 12>
+> 🔗 **Live demo:** [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://datapilot-ai-project.streamlit.app/)
 
 ![Dashboard](docs/screenshots/06-dashboard.png)
 
@@ -128,9 +128,9 @@ On Streamlit Community Cloud, put `GEMINI_API_KEY` in the app's **Secrets** inst
 ## 🧪 Testing
 
 ```powershell
+pip install -r requirements-dev.txt
 pytest
 ```
-
 The suite covers each module plus an end-to-end test that loads the sample file, cleans it, handles outliers, builds both reports, and saves a history session. Gemini calls are faked in tests, so no network or key is needed.
 
 ## ⚠️ Limitations
@@ -150,6 +150,22 @@ Time-series forecasting, SQL database connectors, saved cleaning "recipes" you c
 ## 📄 License
 
 MIT. See [LICENSE](LICENSE).
+
+## ☁️ Deployment
+
+Deployed on Streamlit Community Cloud from `app.py`. Settings live in the app's **Secrets**
+(never in the repo):
+
+```toml
+DATAPILOT_PUBLIC_DEMO = "1"
+DATAPILOT_MAX_FILE_MB = "10"
+DATAPILOT_MAX_ROWS = "100000"
+DATAPILOT_MAX_UNDO = "2"
+```
+
+The public demo runs in offline mode: no data leaves the server unless a visitor pastes their
+own Gemini key. Free hosting limits memory, so uploads are capped and the app sleeps after a
+period without visitors.
 
 ## 👤 Author
 
